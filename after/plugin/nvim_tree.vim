@@ -1,3 +1,4 @@
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 lua << EOF
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
