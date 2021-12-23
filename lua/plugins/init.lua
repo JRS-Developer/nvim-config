@@ -24,10 +24,10 @@ return packer.startup(function(use)
 
 	use  {
 	'kyazdani42/nvim-tree.lua', commit = 'b853e10',
-	requires = {
-		'kyazdani42/nvim-web-devicons', -- optional, for file icon
-	},
-	config = "require('nvim-tree-config')" 
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+    },
+    config = "require('nvim-tree-config')",
 	}
 
   use {
@@ -38,7 +38,8 @@ return packer.startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    config = "require('treesitter-config')"
+    requires = {'windwp/nvim-ts-autotag'},
+    config = "require('treesitter-config')",
   }
 
   -- LSP
@@ -100,7 +101,9 @@ return packer.startup(function(use)
     'windwp/nvim-ts-autotag', config = function() require'nvim-ts-autotag'.setup() end
   } 
   use {
-'windwp/nvim-autopairs', config = function() require'nvim-autopairs'.setup() end
+    'windwp/nvim-autopairs', config = function() require'nvim-autopairs'.setup({
+      check_ts = true
+    }) end
   } 
   use 'tpope/vim-surround' -- surround characters shortcuts
 
@@ -114,7 +117,9 @@ return packer.startup(function(use)
   use {
     'numToStr/Comment.nvim', config = "require('Comment-config')"
     }
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use {
+    'JoosepAlviste/nvim-ts-context-commentstring', after = "nvim-treesitter"
+  }
     
   use {
     'folke/todo-comments.nvim', config = function() require'todo-comments'.setup() end
