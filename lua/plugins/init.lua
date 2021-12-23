@@ -105,9 +105,10 @@ return packer.startup(function(use)
   use 'tpope/vim-surround' -- surround characters shortcuts
 
   -- Tabs
-  use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons', 
-  config = "require('bufferline-config')"
-}
+  use {'akinsho/bufferline.nvim', 
+    requires = 'kyazdani42/nvim-web-devicons', 
+    config = "require('bufferline-config')"
+  }
 
   -- Comments
   use {
@@ -126,7 +127,18 @@ return packer.startup(function(use)
 
   -- Git
   use 'tpope/vim-fugitive'
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function() require'gitsigns'.setup() end
+  }
 
+  -- Formatting
+  use {
+    'mhartington/formatter.nvim', config = "require('formatter-config')"
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
