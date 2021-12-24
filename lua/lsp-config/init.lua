@@ -26,6 +26,7 @@ local on_attach = function(client, bufnr)
 
 
   -- slp saga
+  buf_set_keymap("n", "<leader>ca", ":Lspsaga code_action<CR>", {silent = true, noremap = true})
   buf_set_keymap("n", "gh", "<cmd>Lspsaga lsp_finder<cr>", {silent = true, noremap = true})
 
   buf_set_keymap("n", "gr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
