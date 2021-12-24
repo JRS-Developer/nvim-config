@@ -26,4 +26,4 @@ vim.o.termguicolors = true
 vim.o.completeopt = "menuone,noinsert,noselect"
 
 
-vim.cmd [[hi Normal guibg=NONE guifg=NONE ctermbg=NONE term=NONE gui=NONE]]
+-- vim.cmd [[hi Normal guibg=NONE guifg=NONE ctermbg=NONE term=NONE gui=NONE]]

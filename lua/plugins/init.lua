@@ -15,9 +15,9 @@ return packer.startup(function(use)
     config = function()
     vim.g.material_style = "deep ocean"
     require'material'.setup({
-      disable = {
-        background = true
-      }
+      -- disable = {
+      --   background = true
+      -- }
     })
 
     vim.cmd 'colorscheme material'
