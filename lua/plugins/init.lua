@@ -13,8 +13,13 @@ return packer.startup(function(use)
 	use {
     'marko-cerovac/material.nvim', 
     config = function()
-    require'material'.setup()
     vim.g.material_style = "deep ocean"
+    require'material'.setup({
+      disable = {
+        background = true
+      }
+    })
+
     vim.cmd 'colorscheme material'
   end
   }
