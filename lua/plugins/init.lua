@@ -22,6 +22,8 @@ return packer.startup(function(use)
     'norcalli/nvim-colorizer.lua', config = function() require('colorizer').setup() end
   }
 
+
+  -- Exploration
 	use  {
 	'kyazdani42/nvim-tree.lua', commit = 'b853e10',
     requires = {
@@ -29,12 +31,13 @@ return packer.startup(function(use)
     },
     config = "require('nvim-tree-config')",
 	}
-
   use {
     'nvim-telescope/telescope.nvim',
     requires =  {'nvim-lua/plenary.nvim'},
     config = "require('telescope-config')"
   }
+
+  -- Sintax
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
