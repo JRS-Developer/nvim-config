@@ -164,6 +164,12 @@ return packer.startup(function(use)
 
   -- Search And Replace
   use { 'windwp/nvim-spectre', config="require('spectre-config')" } 
+  use {
+    'mfussenegger/nvim-dap',
+    config = "require('dap-config')"
+  }
+
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
