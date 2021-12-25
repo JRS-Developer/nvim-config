@@ -94,7 +94,10 @@ return packer.startup(function(use)
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/cmp-nvim-lua'
+  use { 'David-Kunz/cmp-npm', requires = { 'nvim-lua/plenary.nvim' } }
   use 'hrsh7th/nvim-cmp'
+  use 'github/copilot.vim'
   use 'onsails/lspkind-nvim'
 
   -- Snippets
@@ -152,6 +155,15 @@ return packer.startup(function(use)
   use {
     'mhartington/formatter.nvim', config = "require('formatter-config')"
   }
+
+  -- Markdown
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+
+  -- Cursor
+  use 'xiyaowong/nvim-cursorword'
+
+  -- Search And Replace
+  use { 'windwp/nvim-spectre', config="require('spectre-config')" } 
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

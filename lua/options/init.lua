@@ -25,5 +25,6 @@ vim.o.clipboard = "unnamedplus"
 vim.o.termguicolors = true
 vim.o.completeopt = "menuone,noinsert,noselect"
 
+vim.opt.mouse = "a" -- Allow to use the mouse
 
 vim.cmd [[hi Normal guibg=NONE guifg=NONE ctermbg=NONE term=NONE gui=NONE]]
