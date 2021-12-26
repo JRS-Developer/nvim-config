@@ -61,6 +61,7 @@ return packer.startup(function(use)
     'ray-x/lsp_signature.nvim', config = function() require "lsp_signature".setup()
  end
   } 
+  use 'b0o/SchemaStore.nvim' -- Json schemas
   use {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
@@ -148,7 +149,7 @@ return packer.startup(function(use)
     requires = {
       'nvim-lua/plenary.nvim'
     },
-    config = function() require'gitsigns'.setup() end
+    config = "require'gitsigns-config'"
   }
 
   -- Formatting

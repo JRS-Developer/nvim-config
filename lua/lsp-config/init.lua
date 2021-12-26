@@ -45,6 +45,8 @@ local on_attach = function(client, bufnr)
   virtual_text = {
 	  prefix = '●', -- Could be '●', '▎', 'x'
   },
+  signs = true,
+  underline = true,
   update_in_insert = true,
   })
 
@@ -119,7 +121,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'jsonls', 'vimls', 'cssls', 'eslint', 'html', 'cssmodules_ls', 'stylelint_lsp', 'tailwindcss', 'emmet_ls' }
+local servers = { 'tsserver', 'vimls', 'cssls', 'eslint', 'html', 'cssmodules_ls', 'stylelint_lsp', 'tailwindcss', 'emmet_ls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -130,3 +132,18 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities
   }
 end 
+
+-- Config JSONls 
+nvim_lsp.jsonls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  root_dir = vim.loop.cwd,
+  settings = {
+    json = {
+      schemas = require'schemastore'.json.schemas(),
+    }
+  }
+}
