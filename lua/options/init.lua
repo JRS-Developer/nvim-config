@@ -1,8 +1,9 @@
 vim.g.mapleader = " "
 
 -- Left side
-vim.o.relativenumber = true
+-- vim.o.relativenumber = true -- It is lagging the scroll :(
 vim.o.number = true
+-- vim.o.lazyredraw = true
 vim.o.signcolumn = "yes" -- Space for lsp icons
 
 -- Ident
@@ -27,4 +28,4 @@ vim.o.completeopt = "menuone,noinsert,noselect"
 
 vim.opt.mouse = "a" -- Allow to use the mouse
 
--- vim.cmd [[hi Normal guibg=NONE guifg=NONE ctermbg=NONE term=NONE gui=NONE]]
+-- vim.cmd [[hi Normal guibg=NONE guifg=NONE ctermbg=NONE term=NONE gui=NONE]] -- Transparent background
