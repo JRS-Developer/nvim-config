@@ -18,17 +18,21 @@ return packer.startup(function(use)
 	use {
     'marko-cerovac/material.nvim',
     config = function()
-    vim.g.material_style = "deep ocean"
     require'material'.setup({
       italics = {
-        comments = false, -- Enable italic comments
+        comments = true, -- Enable italic comments
         keywords = false, -- Enable italic keywords
         functions = true, -- Enable italic functions
         strings = false, -- Enable italic strings
         variables = false -- Enable italic variables
       },
+      disable = {
+        background = true, -- Disable background colors
+      }
     })
 
+    vim.g.material_style = "deep ocean"
+    vim.g.material_disable_background = true
     vim.cmd 'colorscheme material'
   end
   }
