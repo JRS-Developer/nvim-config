@@ -9,9 +9,14 @@ local packer = require('packer')
 return packer.startup(function(use) 
 	use 'wbthomason/packer.nvim'
 
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = "require('indent-config')"
+  }
+
   -- Themes And Colors
 	use {
-    'marko-cerovac/material.nvim', 
+    'marko-cerovac/material.nvim',
     config = function()
     vim.g.material_style = "deep ocean"
     require'material'.setup({
@@ -22,9 +27,6 @@ return packer.startup(function(use)
         strings = false, -- Enable italic strings
         variables = false -- Enable italic variables
       },
-      -- disable = {
-      --   background = true
-      -- }
     })
 
     vim.cmd 'colorscheme material'
@@ -32,9 +34,15 @@ return packer.startup(function(use)
   }
 
   use {
-    'norcalli/nvim-colorizer.lua', config = function() require('colorizer').setup() end
+    'folke/tokyonight.nvim',
+    config = function()
+      vim.g.tokyonight_style = "night"
+    end
   }
 
+  use {
+    'norcalli/nvim-colorizer.lua', config = function() require('colorizer').setup() end
+  }
 
   -- Exploration
 	use  {
@@ -57,6 +65,7 @@ return packer.startup(function(use)
     requires = {'windwp/nvim-ts-autotag'},
     config = "require('treesitter-config')",
   }
+  use 'p00f/nvim-ts-rainbow'
 
   -- LSP
   use {
@@ -66,8 +75,7 @@ return packer.startup(function(use)
     'tami5/lspsaga.nvim', branch = "nvim6.0", config = "require('lsp-saga-config')"
   }
   use {
-    'ray-x/lsp_signature.nvim', config = function() require "lsp_signature".setup()
- end
+    'ray-x/lsp_signature.nvim', config = function() require "lsp_signature".setup() end
   } 
   use 'b0o/SchemaStore.nvim' -- Json schemas
   use {

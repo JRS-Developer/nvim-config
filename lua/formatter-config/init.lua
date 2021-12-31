@@ -27,7 +27,13 @@ require('formatter').setup{
 		},
 	html = {
 		prettier
-		}
+		},
+  yaml = {
+    prettier
+  },
+  json = {
+    prettier
+  },
 }
 }
 
