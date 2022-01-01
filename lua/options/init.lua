@@ -28,4 +28,10 @@ vim.o.completeopt = "menuone,noinsert,noselect"
 
 vim.opt.mouse = "a" -- Allow to use the mouse
 
+vim.o.foldmethod = "manual"
+vim.o.foldcolumn = "1"
+
+vim.cmd("autocmd BufWinLeave * mkview") -- Create a view for each file
+vim.cmd("autocmd BufWinEnter * silent loadview") -- Load the view for each file
+
 -- vim.cmd [[hi Normal guibg=NONE guifg=NONE ctermbg=NONE term=NONE gui=NONE]] -- Transparent background
