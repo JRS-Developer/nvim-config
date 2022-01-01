@@ -33,13 +33,13 @@ return packer.startup(function(use)
 					strings = false, -- Enable italic strings
 					variables = false, -- Enable italic variables
 				},
-				disable = {
-					background = true, -- Disable background colors
-				},
+				-- disable = {
+				-- 	background = true, -- Disable background colors
+				-- },
 			})
 
 			vim.g.material_style = "deep ocean"
-			vim.g.material_disable_background = true
+			-- vim.g.material_disable_background = true -- En windows no tengo modo transparente
 			vim.cmd("colorscheme material")
 		end,
 	})
