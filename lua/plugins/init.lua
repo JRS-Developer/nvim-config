@@ -13,13 +13,19 @@ end
 
 local packer = require("packer")
 
-return packer.startup(function(use)
+return packer.startup({function(use)
 	use("wbthomason/packer.nvim")
 
-	use({
-		"lukas-reineke/indent-blankline.nvim",
-		config = "require('indent-config')",
-	})
+  use({ 
+    'lewis6991/impatient.nvim' -- Speed up startup! :D
+  })
+
+  use ({
+    'glepnir/dashboard-nvim', -- Dashboard
+    config = "require('dashboard-config')",
+  })
+
+  use "nvim-lua/plenary.nvim" -- Many plugins require plenary.
 
 	-- Themes And Colors
 	use({
@@ -73,6 +79,12 @@ return packer.startup(function(use)
 		config = "require('telescope-config')",
 	})
 
+  -- Projects
+  use({
+    'ahmedkhalf/project.nvim', 
+    config = "require('project-config')",
+  })
+
 	-- Sintax
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -80,7 +92,6 @@ return packer.startup(function(use)
 		requires = { "windwp/nvim-ts-autotag" },
 		config = "require('treesitter-config')",
 	})
-	use("p00f/nvim-ts-rainbow")
 
 	-- LSP
 	use({
@@ -106,28 +117,8 @@ return packer.startup(function(use)
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("trouble").setup({})
-
-			-- Keymaps
-			vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", { silent = true, noremap = true })
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>xw",
-				"<cmd>Trouble workspace_diagnostics<cr>",
-				{ silent = true, noremap = true }
-			)
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>xd",
-				"<cmd>Trouble document_diagnostics<cr>",
-				{ silent = true, noremap = true }
-			)
-			vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>", { silent = true, noremap = true })
-			vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>", { silent = true, noremap = true })
-			vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
-		end,
-	})
+		config = "require('trouble-config')",
+  })
 
 	-- Completion
 	use("hrsh7th/cmp-nvim-lsp")
@@ -196,7 +187,6 @@ return packer.startup(function(use)
 	})
 
 	-- Git
-	use("tpope/vim-fugitive")
 	use({
 		"lewis6991/gitsigns.nvim",
 		requires = {
@@ -233,7 +223,20 @@ return packer.startup(function(use)
 		config = "require('dap-config')",
 	})
 
-	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	use({ 
+    "rcarriga/nvim-dap-ui", 
+    requires = { "mfussenegger/nvim-dap" },
+    config = function()
+      require("dapui").setup()
+    end,
+  })
+
+  use ({
+    'theHamsta/nvim-dap-virtual-text', 
+    config = function() 
+      require('nvim-dap-virtual-text').setup()
+    end,
+  })
 
 	-- Terminal
 	use({ "akinsho/toggleterm.nvim", config = "require('toggleterm-config')" })
@@ -243,4 +246,9 @@ return packer.startup(function(use)
 	if packer_bootstrap then
 		require("packer").sync()
 	end
-end)
+end,
+  config = {
+    compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
+  }
+}
+)
