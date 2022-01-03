@@ -67,7 +67,6 @@ return packer.startup({function(use)
 	-- Exploration
 	use({
 		"kyazdani42/nvim-tree.lua",
-		commit = "b853e10",
 		requires = {
 			"kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
