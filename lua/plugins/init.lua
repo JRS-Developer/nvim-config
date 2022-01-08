@@ -46,7 +46,7 @@ return packer.startup({function(use)
 
 			vim.g.material_style = "deep ocean"
 			-- vim.g.material_disable_background = true -- En windows no tengo modo transparente
-			vim.cmd("colorscheme material")
+			-- vim.cmd("colorscheme material")
 		end,
 	})
 
@@ -54,6 +54,7 @@ return packer.startup({function(use)
 		"folke/tokyonight.nvim",
 		config = function()
 			vim.g.tokyonight_style = "night"
+      vim.cmd[[colorscheme tokyonight]]
 		end,
 	})
 
@@ -193,6 +194,12 @@ return packer.startup({function(use)
 		},
 		config = "require'gitsigns-config'",
 	})
+
+  use { 'TimUntersberger/neogit', requires = {
+    'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' 
+  }, config="require('neogit-config')" }
+
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config="require('diffview-config')" }
 
 	-- Formatting
 	use({
