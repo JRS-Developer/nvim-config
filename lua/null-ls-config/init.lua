@@ -1,8 +1,8 @@
 local null_ls = require("null-ls")
 
 local sources = {
-	-- null_ls.builtins.formatting.stylua, -- No funciona en windows
-	-- null_ls.builtins.diagnostics.luacheck, -- No funciona en windows
+	null_ls.builtins.formatting.stylua,
+	null_ls.builtins.diagnostics.luacheck,
 }
 
 null_ls.setup({
