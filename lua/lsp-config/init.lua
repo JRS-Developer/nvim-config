@@ -63,6 +63,10 @@ local on_attach = function(client, bufnr)
 		local hl = "DiagnosticSign" .. type
 		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 	end
+
+	if client.resolved_capabilities.document_formatting then
+		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+	end
 end
 
 local cmp = require("cmp")
@@ -140,6 +144,9 @@ local servers = {
 	"stylelint_lsp",
 	"tailwindcss",
 	"emmet_ls",
+	"pyright",
+	"gopls",
+	"golangci_lint_ls",
 }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup({

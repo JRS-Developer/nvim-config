@@ -72,6 +72,13 @@ return packer.startup({
 			end,
 		})
 
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			config = "require('indent-blankline-config')",
+		})
+
+		use("p00f/nvim-ts-rainbow")
+
 		-- Exploration
 		use({
 			"kyazdani42/nvim-tree.lua",
