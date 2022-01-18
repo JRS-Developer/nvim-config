@@ -123,15 +123,17 @@ return packer.startup({
 				require("lsp_signature").setup()
 			end,
 		})
-		use({
-			"jose-elias-alvarez/null-ls.nvim",
-			config = "require('null-ls-config')",
-		})
 		use("b0o/SchemaStore.nvim") -- Json schemas
 		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
 			config = "require('trouble-config')",
+		})
+
+		-- Formatting, Diagnostics and Code Analysis, The best of both worlds!
+		use({
+			"jose-elias-alvarez/null-ls.nvim",
+			config = "require('null-ls-config')",
 		})
 
 		-- Completion
@@ -219,12 +221,6 @@ return packer.startup({
 		})
 
 		use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim", config = "require('diffview-config')" })
-
-		-- Formatting
-		use({
-			"mhartington/formatter.nvim",
-			config = "require('formatter-config')",
-		})
 
 		-- Markdown
 		use({

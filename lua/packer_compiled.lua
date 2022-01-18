@@ -150,12 +150,6 @@ _G.packer_plugins = {
     path = "/home/jose/.local/share/nvim/site/pack/packer/start/diffview.nvim",
     url = "https://github.com/sindrets/diffview.nvim"
   },
-  ["formatter.nvim"] = {
-    config = { "require('formatter-config')" },
-    loaded = true,
-    path = "/home/jose/.local/share/nvim/site/pack/packer/start/formatter.nvim",
-    url = "https://github.com/mhartington/formatter.nvim"
-  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/jose/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -209,7 +203,7 @@ _G.packer_plugins = {
     url = "https://github.com/iamcco/markdown-preview.nvim"
   },
   ["material.nvim"] = {
-    config = { "\27LJ\2\n許1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0'\1\t\0=\1\b\0K\0\1\0\15deep ocean\19material_style\6g\bvim\fitalics\1\0\0\1\0\5\14variables\1\rkeywords\1\14functions\2\rcomments\2\fstrings\1\nsetup\rmaterial\frequire\0" },
+    config = { "\27LJ\2\n許1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0'\1\t\0=\1\b\0K\0\1\0\15deep ocean\19material_style\6g\bvim\fitalics\1\0\0\1\0\5\fstrings\1\rcomments\2\rkeywords\1\14functions\2\14variables\1\nsetup\rmaterial\frequire\0" },
     loaded = true,
     path = "/home/jose/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
@@ -376,134 +370,130 @@ time([[Defining packer_plugins]], false)
 time([[Setup for markdown-preview.nvim]], true)
 try_loadstring("\27LJ\2\n=\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rmarkdown\19mkdp_filetypes\6g\bvim\0", "setup", "markdown-preview.nvim")
 time([[Setup for markdown-preview.nvim]], false)
--- Config for: nvim-ts-autotag
-time([[Config for nvim-ts-autotag]], true)
-try_loadstring("\27LJ\2\n=\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
-time([[Config for nvim-ts-autotag]], false)
--- Config for: tokyonight.nvim
-time([[Config for tokyonight.nvim]], true)
-try_loadstring("\27LJ\2\n8\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\nnight\21tokyonight_style\6g\bvim\0", "config", "tokyonight.nvim")
-time([[Config for tokyonight.nvim]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
-require('Comment-config')
-time([[Config for Comment.nvim]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-require('lsp-config')
-time([[Config for nvim-lspconfig]], false)
--- Config for: material.nvim
-time([[Config for material.nvim]], true)
-try_loadstring("\27LJ\2\n許1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0'\1\t\0=\1\b\0K\0\1\0\15deep ocean\19material_style\6g\bvim\fitalics\1\0\0\1\0\5\14variables\1\rkeywords\1\14functions\2\rcomments\2\fstrings\1\nsetup\rmaterial\frequire\0", "config", "material.nvim")
-time([[Config for material.nvim]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-require('trouble-config')
-time([[Config for trouble.nvim]], false)
--- Config for: catppuccin
-time([[Config for catppuccin]], true)
-require('catppuccin-config')
-time([[Config for catppuccin]], false)
--- Config for: nvim-scrollbar
-time([[Config for nvim-scrollbar]], true)
-require('scrollbar-config')
-time([[Config for nvim-scrollbar]], false)
--- Config for: nvim-dap-ui
-time([[Config for nvim-dap-ui]], true)
-try_loadstring("\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\ndapui\frequire\0", "config", "nvim-dap-ui")
-time([[Config for nvim-dap-ui]], false)
--- Config for: nvim-spectre
-time([[Config for nvim-spectre]], true)
-require('spectre-config')
-time([[Config for nvim-spectre]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-require('null-ls-config')
-time([[Config for null-ls.nvim]], false)
--- Config for: bufferline.nvim
-time([[Config for bufferline.nvim]], true)
-require('bufferline-config')
-time([[Config for bufferline.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('nvim-tree-config')
-time([[Config for nvim-tree.lua]], false)
--- Config for: diffview.nvim
-time([[Config for diffview.nvim]], true)
-require('diffview-config')
-time([[Config for diffview.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('treesitter-config')
-time([[Config for nvim-treesitter]], false)
--- Config for: neogit
-time([[Config for neogit]], true)
-require('neogit-config')
-time([[Config for neogit]], false)
--- Config for: formatter.nvim
-time([[Config for formatter.nvim]], true)
-require('formatter-config')
-time([[Config for formatter.nvim]], false)
--- Config for: dashboard-nvim
-time([[Config for dashboard-nvim]], true)
-require('dashboard-config')
-time([[Config for dashboard-nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\rcheck_ts\2\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
--- Config for: nvim-colorizer.lua
-time([[Config for nvim-colorizer.lua]], true)
-try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
-time([[Config for nvim-colorizer.lua]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-require('lualine-config')
-time([[Config for lualine.nvim]], false)
--- Config for: nvim-dap-virtual-text
-time([[Config for nvim-dap-virtual-text]], true)
-try_loadstring("\27LJ\2\nC\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\26nvim-dap-virtual-text\frequire\0", "config", "nvim-dap-virtual-text")
-time([[Config for nvim-dap-virtual-text]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-require'gitsigns-config'
-time([[Config for gitsigns.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-require('telescope-config')
-time([[Config for telescope.nvim]], false)
--- Config for: lspsaga.nvim
-time([[Config for lspsaga.nvim]], true)
-require('lsp-saga-config')
-time([[Config for lspsaga.nvim]], false)
--- Config for: nvim-dap
-time([[Config for nvim-dap]], true)
-require('dap-config')
-time([[Config for nvim-dap]], false)
--- Config for: todo-comments.nvim
-time([[Config for todo-comments.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
-time([[Config for todo-comments.nvim]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-require('indent-blankline-config')
-time([[Config for indent-blankline.nvim]], false)
--- Config for: project.nvim
-time([[Config for project.nvim]], true)
-require('project-config')
-time([[Config for project.nvim]], false)
--- Config for: LuaSnip
-time([[Config for LuaSnip]], true)
-require('luaSnip-config')
-time([[Config for LuaSnip]], false)
 -- Config for: toggleterm.nvim
 time([[Config for toggleterm.nvim]], true)
 require('toggleterm-config')
 time([[Config for toggleterm.nvim]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+require('null-ls-config')
+time([[Config for null-ls.nvim]], false)
+-- Config for: tokyonight.nvim
+time([[Config for tokyonight.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\nnight\21tokyonight_style\6g\bvim\0", "config", "tokyonight.nvim")
+time([[Config for tokyonight.nvim]], false)
+-- Config for: nvim-ts-autotag
+time([[Config for nvim-ts-autotag]], true)
+try_loadstring("\27LJ\2\n=\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
+time([[Config for nvim-ts-autotag]], false)
 -- Config for: lsp_signature.nvim
 time([[Config for lsp_signature.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18lsp_signature\frequire\0", "config", "lsp_signature.nvim")
 time([[Config for lsp_signature.nvim]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+require('indent-blankline-config')
+time([[Config for indent-blankline.nvim]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+require('trouble-config')
+time([[Config for trouble.nvim]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+require('lsp-config')
+time([[Config for nvim-lspconfig]], false)
+-- Config for: nvim-dap-virtual-text
+time([[Config for nvim-dap-virtual-text]], true)
+try_loadstring("\27LJ\2\nC\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\26nvim-dap-virtual-text\frequire\0", "config", "nvim-dap-virtual-text")
+time([[Config for nvim-dap-virtual-text]], false)
+-- Config for: nvim-colorizer.lua
+time([[Config for nvim-colorizer.lua]], true)
+try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
+time([[Config for nvim-colorizer.lua]], false)
+-- Config for: nvim-spectre
+time([[Config for nvim-spectre]], true)
+require('spectre-config')
+time([[Config for nvim-spectre]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+require'gitsigns-config'
+time([[Config for gitsigns.nvim]], false)
+-- Config for: catppuccin
+time([[Config for catppuccin]], true)
+require('catppuccin-config')
+time([[Config for catppuccin]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('nvim-tree-config')
+time([[Config for nvim-tree.lua]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require('lualine-config')
+time([[Config for lualine.nvim]], false)
+-- Config for: nvim-dap
+time([[Config for nvim-dap]], true)
+require('dap-config')
+time([[Config for nvim-dap]], false)
+-- Config for: lspsaga.nvim
+time([[Config for lspsaga.nvim]], true)
+require('lsp-saga-config')
+time([[Config for lspsaga.nvim]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+require('Comment-config')
+time([[Config for Comment.nvim]], false)
+-- Config for: nvim-dap-ui
+time([[Config for nvim-dap-ui]], true)
+try_loadstring("\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\ndapui\frequire\0", "config", "nvim-dap-ui")
+time([[Config for nvim-dap-ui]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\rcheck_ts\2\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
+-- Config for: neogit
+time([[Config for neogit]], true)
+require('neogit-config')
+time([[Config for neogit]], false)
+-- Config for: project.nvim
+time([[Config for project.nvim]], true)
+require('project-config')
+time([[Config for project.nvim]], false)
+-- Config for: dashboard-nvim
+time([[Config for dashboard-nvim]], true)
+require('dashboard-config')
+time([[Config for dashboard-nvim]], false)
+-- Config for: bufferline.nvim
+time([[Config for bufferline.nvim]], true)
+require('bufferline-config')
+time([[Config for bufferline.nvim]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+require('telescope-config')
+time([[Config for telescope.nvim]], false)
+-- Config for: diffview.nvim
+time([[Config for diffview.nvim]], true)
+require('diffview-config')
+time([[Config for diffview.nvim]], false)
+-- Config for: material.nvim
+time([[Config for material.nvim]], true)
+try_loadstring("\27LJ\2\n許1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0'\1\t\0=\1\b\0K\0\1\0\15deep ocean\19material_style\6g\bvim\fitalics\1\0\0\1\0\5\fstrings\1\rcomments\2\rkeywords\1\14functions\2\14variables\1\nsetup\rmaterial\frequire\0", "config", "material.nvim")
+time([[Config for material.nvim]], false)
+-- Config for: todo-comments.nvim
+time([[Config for todo-comments.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
+time([[Config for todo-comments.nvim]], false)
+-- Config for: nvim-scrollbar
+time([[Config for nvim-scrollbar]], true)
+require('scrollbar-config')
+time([[Config for nvim-scrollbar]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('treesitter-config')
+time([[Config for nvim-treesitter]], false)
+-- Config for: LuaSnip
+time([[Config for LuaSnip]], true)
+require('luaSnip-config')
+time([[Config for LuaSnip]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-ts-context-commentstring ]]

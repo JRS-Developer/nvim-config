@@ -64,9 +64,9 @@ local on_attach = function(client, bufnr)
 		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 	end
 
-	if client.resolved_capabilities.document_formatting then
-		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-	end
+	-- Disable formatting
+	client.resolved_capabilities.document_formatting = false
+	client.resolved_capabilities.document_range_formatting = false
 end
 
 local cmp = require("cmp")
