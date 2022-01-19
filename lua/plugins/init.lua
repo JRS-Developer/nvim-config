@@ -120,7 +120,9 @@ return packer.startup({
 		use({
 			"ray-x/lsp_signature.nvim",
 			config = function()
-				require("lsp_signature").setup()
+				require("lsp_signature").setup({
+					hint_prefix = "🐢 ",
+				})
 			end,
 		})
 		use("b0o/SchemaStore.nvim") -- Json schemas
