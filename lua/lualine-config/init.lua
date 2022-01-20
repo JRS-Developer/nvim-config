@@ -4,7 +4,10 @@ require("lualine").setup({
 		theme = "catppuccin",
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
-		disabled_filetypes = {},
+		disabled_filetypes = {
+			"dashboard",
+			"NvimTree",
+		},
 		always_divide_middle = true,
 	},
 	sections = {
@@ -26,3 +29,5 @@ require("lualine").setup({
 	tabline = {},
 	extensions = {},
 })
+
+vim.cmd([[autocmd VimEnter * highlight clear StatusLine .]]) -- Transparent statusline
