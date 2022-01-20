@@ -66,6 +66,11 @@ return packer.startup({
 		})
 
 		use({
+			"kyazdani42/nvim-web-devicons",
+			config = "require('devicons-config')",
+		})
+
+		use({
 			"norcalli/nvim-colorizer.lua",
 			config = function()
 				require("colorizer").setup()
@@ -146,13 +151,7 @@ return packer.startup({
 		use("hrsh7th/cmp-nvim-lua")
 		use({ "David-Kunz/cmp-npm", requires = { "nvim-lua/plenary.nvim" } })
 		use("hrsh7th/nvim-cmp")
-		use({
-			"github/copilot.vim",
-			config = function()
-				vim.g.copilot_no_tab_map = true
-				vim.g.copilot_assume_mapped = true
-			end,
-		})
+		use("github/copilot.vim")
 		use("onsails/lspkind-nvim")
 
 		-- Snippets
