@@ -20,7 +20,7 @@ vim.o.scrolloff = 8
 vim.o.incsearch = true
 vim.o.hlsearch = false
 
--- -- Cursor
+-- Cursor
 vim.o.cursorline = true
 vim.o.cursorlineopt = "number"
 
