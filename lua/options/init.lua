@@ -21,9 +21,9 @@ vim.o.incsearch = true
 vim.o.hlsearch = false
 
 -- -- Cursor
--- vim.o.cursorline = true
--- vim.o.cursorlineopt = "number"
---
+vim.o.cursorline = true
+vim.o.cursorlineopt = "number"
+
 -- ETC
 vim.o.hidden = true
 vim.o.clipboard = "unnamedplus" -- Allow copy/paste from other programs
