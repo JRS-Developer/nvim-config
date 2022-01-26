@@ -1,15 +1,17 @@
 local null_ls = require("null-ls")
+local builtins = null_ls.builtins
 
 local sources = {
 	-- Formatters
-	null_ls.builtins.formatting.stylua,
-	null_ls.builtins.formatting.black,
-	null_ls.builtins.formatting.gofmt,
-	null_ls.builtins.formatting.prettierd.with({
+	builtins.formatting.stylua,
+	builtins.formatting.black,
+	builtins.formatting.gofmt,
+	builtins.formatting.prettierd.with({
 		prefer_local = "node_modules/.bin",
 	}),
+	builtins.formatting.phpcsfixer,
 	-- Diagnostics
-	null_ls.builtins.diagnostics.luacheck,
+	builtins.diagnostics.luacheck,
 }
 
 null_ls.setup({

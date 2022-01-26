@@ -147,6 +147,9 @@ local servers = {
 	"pyright",
 	"gopls",
 	"golangci_lint_ls",
+	"intelephense",
+	-- "vuels",
+	"volar",
 }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup({
