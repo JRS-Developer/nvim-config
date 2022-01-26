@@ -272,6 +272,12 @@ return packer.startup({
 		-- Scroll
 		use({ "petertriho/nvim-scrollbar", config = "require('scrollbar-config')" })
 
+		-- Keymaps
+		use({
+			"folke/which-key.nvim",
+			config = "require('which-key-config')",
+		})
+
 		-- Automatically set up your configuration after cloning packer.nvim
 		-- Put this at the end after all plugins
 		if packer_bootstrap then

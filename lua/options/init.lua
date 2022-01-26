@@ -35,5 +35,7 @@ vim.opt.mouse = "a" -- Allow to use the mouse
 vim.o.foldmethod = "manual"
 vim.o.foldcolumn = "auto"
 
+vim.opt.timeoutlen = 100 -- time to wait for a mapped sequence to complete (in milliseconds)
+
 vim.cmd("autocmd BufWinLeave *.* mkview!") -- Create a view for each file
 vim.cmd("autocmd BufWinEnter *.* silent loadview") -- Load the view for each file
