@@ -6,4 +6,4 @@
 
 ### Without Background
 
-![No Background](./no-background.png)
+![Transparent Background](./no-background.png)
