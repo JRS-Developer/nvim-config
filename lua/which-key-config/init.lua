@@ -17,7 +17,7 @@ local setup = {
 			operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
 			motions = false, -- adds help for motions
 			text_objects = false, -- help for text objects triggered after entering an operator
-			windows = true, -- default bindings on <c-w>
+			windows = false, -- default bindings on <c-w>
 			nav = true, -- misc bindings to work with windows
 			z = true, -- bindings for folds, spelling and others prefixed with z
 			g = true, -- bindings for prefixed with g
@@ -93,6 +93,16 @@ local mappings = {
 		g = { "<cmd>Telescope live_grep<cr>", "Find Word" },
 		b = { "<cmd>Telescope buffers<cr>", "Find Buffer" },
 		h = { "<cmd>Telescope help_tags<cr>", "Find Tag" },
+	},
+	x = {
+		name = "Trouble",
+		x = { "<cmd>Trouble<cr>", "Trouble" },
+	},
+	g = { "<cmd>Neogit kind=vsplit <cr>", "Neogit" },
+	s = {
+		name = "Search",
+		["S"] = { "<cmd>lua require('spectre').open()<cr>", "Search And Replace" },
+		s = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search Replace Current Word" },
 	},
 }
 
