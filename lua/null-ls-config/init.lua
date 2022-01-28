@@ -10,8 +10,6 @@ local sources = {
 		prefer_local = "node_modules/.bin",
 	}),
 	builtins.formatting.phpcsfixer,
-	-- Diagnostics
-	builtins.diagnostics.luacheck,
 }
 
 null_ls.setup({

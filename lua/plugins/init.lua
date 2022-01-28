@@ -84,8 +84,11 @@ return packer.startup({
 
 		-- LSP
 		use({
-			"neovim/nvim-lspconfig",
+			"williamboman/nvim-lsp-installer",
 			config = "require('lsp-config')",
+		})
+		use({
+			"neovim/nvim-lspconfig",
 		})
 		use({
 			"tami5/lspsaga.nvim",

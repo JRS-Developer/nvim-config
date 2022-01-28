@@ -132,47 +132,96 @@ cmp.setup.cmdline(":", {
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
+local lsp_installer = require("nvim-lsp-installer")
+
+-- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
+-- or if the server is already installed).
+lsp_installer.on_server_ready(function(server)
+	local opts = {}
+
+	-- (optional) Customize the options passed to the server
+	-- if server.name == "tsserver" then
+	--     opts.root_dir = function() ... end
+	-- end
+
+	if server.name == "sumneko_lua" then
+		opts.settings = {
+			Lua = {
+				diagnostics = {
+					globals = {
+						vim = true,
+						nvim = true,
+					},
+				},
+			},
+		}
+	end
+
+	if server.name == "jsonls" then
+		opts.settings = {
+			json = {
+				schemas = require("schemastore").json.schemas(),
+			},
+		}
+	end
+
+	opts.on_attach = on_attach
+	opts.capabilities = capabilities
+	opts.root_dir = vim.loop.cwd
+	-- This setup() function will take the provided server configuration and decorate it with the necessary properties
+	-- before passing it onwards to lspconfig.
+	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+	server:setup(opts)
+end)
+
+-- Install the servers that are not installed yet.
 local servers = {
 	"tsserver",
 	"vimls",
 	"cssls",
 	"eslint",
 	"html",
-	"cssmodules_ls",
-	"stylelint_lsp",
+	-- "cssmodules_ls",
+	-- "stylelint_lsp",
 	"tailwindcss",
 	"emmet_ls",
 	"pyright",
 	"gopls",
 	"golangci_lint_ls",
 	"intelephense",
-	-- "vuels",
 	"volar",
+	"jsonls",
 }
-for _, lsp in ipairs(servers) do
-	nvim_lsp[lsp].setup({
-		on_attach = on_attach,
-		flags = {
-			debounce_text_changes = 150,
-		},
-		root_dir = vim.loop.cwd,
-		capabilities = capabilities,
-	})
+
+for _, name in pairs(servers) do
+	local server_is_found, server = lsp_installer.get_server(name)
+	if server_is_found and not server:is_installed() then
+		print("Installing " .. name)
+		server:install()
+	end
 end
+-- for _, lsp in ipairs(servers) do
+-- 	nvim_lsp[lsp].setup({
+-- 		on_attach = on_attach,
+-- 		flags = {
+-- 			debounce_text_changes = 150,
+-- 		},
+-- 		root_dir = vim.loop.cwd,
+-- 		capabilities = capabilities,
+-- 	})
+-- end
 
 -- Config JSONls
-nvim_lsp.jsonls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	flags = {
-		debounce_text_changes = 150,
-	},
-	root_dir = vim.loop.cwd,
-	settings = {
-		json = {
-			schemas = require("schemastore").json.schemas(),
-		},
-	},
-})
+-- nvim_lsp.jsonls.setup({
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	flags = {
+-- 		debounce_text_changes = 150,
+-- 	},
+-- 	root_dir = vim.loop.cwd,
+-- 	settings = {
+-- 		json = {
+-- 			schemas = require("schemastore").json.schemas(),
+-- 		},
+-- 	},
+-- })
