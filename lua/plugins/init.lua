@@ -30,36 +30,6 @@ return packer.startup({
 
 		-- Themes And Colors
 		use({
-			"marko-cerovac/material.nvim",
-			config = function()
-				require("material").setup({
-					italics = {
-						comments = true, -- Enable italic comments
-						keywords = false, -- Enable italic keywords
-						functions = true, -- Enable italic functions
-						strings = false, -- Enable italic strings
-						variables = false, -- Enable italic variables
-					},
-					-- disable = {
-					-- 	background = true, -- Disable background colors
-					-- },
-				})
-
-				vim.g.material_style = "deep ocean"
-				-- vim.g.material_disable_background = true -- En windows no tengo modo transparente
-				-- vim.cmd("colorscheme material")
-			end,
-		})
-
-		use({
-			"folke/tokyonight.nvim",
-			config = function()
-				vim.g.tokyonight_style = "night"
-				-- vim.cmd([[colorscheme tokyonight]])
-			end,
-		})
-
-		use({
 			"catppuccin/nvim",
 			as = "catppuccin",
 			config = "require('catppuccin-config')",
@@ -287,6 +257,9 @@ return packer.startup({
 	config = {
 		git = {
 			clone_timout = 1000,
+		},
+		display = {
+			open_fn = require("packer.util").float,
 		},
 	},
 })
