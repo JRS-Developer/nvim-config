@@ -18,7 +18,7 @@ vim.o.scrolloff = 8 -- Scroll off
 
 -- Searching
 vim.o.incsearch = true -- Searching
-vim.o.hlsearch = true -- Highlight search
+vim.o.hlsearch = false -- Highlight search
 
 -- Cursor
 vim.o.cursorline = true
