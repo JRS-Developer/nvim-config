@@ -165,6 +165,14 @@ lsp_installer.on_server_ready(function(server)
 		}
 	end
 
+	if server.name == "volar" then
+		opts.init_options = {
+			typescript = {
+				serverPath = "/usr/lib/node_modules/typescript/lib/tsserverlibrary.js",
+			},
+		}
+	end
+
 	opts.on_attach = on_attach
 	opts.capabilities = capabilities
 	opts.root_dir = vim.loop.cwd
