@@ -101,6 +101,12 @@ local mappings = {
 	g = { "<cmd>Neogit kind=vsplit <cr>", "Neogit" },
 	s = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search Replace Current Word" },
 	["S"] = { "<cmd>lua require('spectre').open()<cr>", "Search And Replace" },
+	m = {
+		name = "Markdown Preview",
+		o = { "<cmd>MarkdownPreview<cr>", "Open" },
+		s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
+		t = { "<cmd>MarkdownPreview<cr>", "Toggle" },
+	},
 }
 
 which_key.register(mappings, opts)
