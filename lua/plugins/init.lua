@@ -219,6 +219,9 @@ return packer.startup({
 		-- Debugger
 		use({
 			"mfussenegger/nvim-dap",
+			requires = {
+				"Pocco81/DAPInstall.nvim",
+			},
 			config = "require('dap-config')",
 		})
 
