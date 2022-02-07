@@ -107,6 +107,16 @@ local mappings = {
 		s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
 		t = { "<cmd>MarkdownPreview<cr>", "Toggle" },
 	},
+	d = {
+		name = "Debug",
+		s = { "<cmd>lua require('dap').continue()<cr>", "Start - Continue" },
+		b = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+		r = { "<cmd>lua require('dap').repl.toggle()<cr>", "Toggle REPL" },
+		t = { "<cmd>lua require('dap').step_over()<cr>", "Step Over" },
+		i = { "<cmd>lua require('dap').step_into()<cr>", "Step Into" },
+		o = { "<cmd>lua require('dap').step_out()<cr>", "Step Out" },
+		e = { "<cmd>lua require('dap').terminate()<cr>", "End Debugger" },
+	},
 }
 
 which_key.register(mappings, opts)
