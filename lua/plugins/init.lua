@@ -24,15 +24,6 @@ return packer.startup({
 		use({
 			"glepnir/dashboard-nvim", -- Dashboard
 			config = "require('dashboard-config')",
-			cmd = {
-				"Dashboard",
-				"DashboardNewFile",
-				"DashboardFindFile",
-				"DashboardFindWord",
-				"DashboardFindHistory",
-				"DashboardJumpMarks",
-				"DashboardChangeColorScheme",
-			},
 		})
 
 		-- Themes And Colors
@@ -64,11 +55,6 @@ return packer.startup({
 				"kyazdani42/nvim-web-devicons", -- optional, for file icon
 			},
 			config = "require('nvim-tree-config')",
-			cmd = {
-				"NvimTreeToggle",
-				"NvimTreeRefresh",
-				"NvimTreeFindFile",
-			},
 		})
 		use({
 			"nvim-telescope/telescope.nvim",
