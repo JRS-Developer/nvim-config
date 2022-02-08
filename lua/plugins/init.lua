@@ -237,9 +237,6 @@ return packer.startup({
 			after = "nvim-dap",
 		})
 
-		-- Terminal
-		use({ "akinsho/toggleterm.nvim", config = "require('toggleterm-config')", cmd = "ToggleTerm" })
-
 		-- Scroll
 		use({ "petertriho/nvim-scrollbar", config = "require('scrollbar-config')" })
 
