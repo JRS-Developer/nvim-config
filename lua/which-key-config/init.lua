@@ -107,7 +107,10 @@ local mappings = {
 		s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
 		t = { "<cmd>MarkdownPreview<cr>", "Toggle" },
 	},
-	n = { "<cmd>NvimTreeToggle <cr>", "NvimTreeToggle" },
+	n = {
+		n = { "<cmd>NvimTreeToggle <cr>", "NvimTreeToggle" },
+		r = { "<cmd>NvimTreeRefresh <cr>", "NvimTreeRefresh" },
+	},
 	d = {
 		name = "DAP",
 		c = { ':lua require("dap").continue()<CR>', "Continue" },
