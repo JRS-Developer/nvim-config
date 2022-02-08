@@ -107,15 +107,34 @@ local mappings = {
 		s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
 		t = { "<cmd>MarkdownPreview<cr>", "Toggle" },
 	},
+	n = { "<cmd>NvimTreeToggle <cr>", "NvimTreeToggle" },
 	d = {
-		name = "Debug",
-		s = { "<cmd>lua require('dap').continue()<cr>", "Start - Continue" },
-		b = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-		r = { "<cmd>lua require('dap').repl.toggle()<cr>", "Toggle REPL" },
-		t = { "<cmd>lua require('dap').step_over()<cr>", "Step Over" },
-		i = { "<cmd>lua require('dap').step_into()<cr>", "Step Into" },
-		o = { "<cmd>lua require('dap').step_out()<cr>", "Step Out" },
-		e = { "<cmd>lua require('dap').terminate()<cr>", "End Debugger" },
+		name = "DAP",
+		c = { ':lua require("dap").continue()<CR>', "Continue" },
+		t = { ':lua require("dap").terminate()<CR>', "Terminate" },
+		l = { ':lua require("dap").run_last()<CR>', "Run Last Debugging Config" },
+		d = { ':lua require("dap").repl.open()<CR>', "Open Debug Console" },
+		b = {
+			name = "Breakpoint",
+			t = { ':lua require("dap").toggle_breakpoint()<CR>', "Toggle" },
+			c = {
+				':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>',
+				"Set conditional",
+			},
+			l = {
+				':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',
+				"With Log Point Message",
+			},
+		},
+		s = {
+			name = "Step",
+			o = { ':lua require("dap").step_over()<CR>', "Step Over" },
+			O = { ':lua require("dap").step_into()<CR>', "Step Into" },
+			i = { ':lua require("dap").step_out()<CR>', "Step Out" },
+			b = { ':lua require("dap").step_back()<CR>', "Step Back" },
+			c = { ':lua require("dap").run_to_cursor()<CR>', "Run To Cursor" },
+		},
+		u = { ':lua require("dapui").toggle()<CR>', "Toggle UI" },
 	},
 }
 

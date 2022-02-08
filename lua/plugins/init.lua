@@ -24,9 +24,16 @@ return packer.startup({
 		use({
 			"glepnir/dashboard-nvim", -- Dashboard
 			config = "require('dashboard-config')",
+			cmd = {
+				"Dashboard",
+				"DashboardNewFile",
+				"DashboardFindFile",
+				"DashboardFindWord",
+				"DashboardFindHistory",
+				"DashboardJumpMarks",
+				"DashboardChangeColorScheme",
+			},
 		})
-
-		use("nvim-lua/plenary.nvim") -- Many plugins require plenary.
 
 		-- Themes And Colors
 		use({
@@ -50,8 +57,6 @@ return packer.startup({
 			config = "require('indent-blankline-config')",
 		})
 
-		use("p00f/nvim-ts-rainbow")
-
 		-- Exploration
 		use({
 			"kyazdani42/nvim-tree.lua",
@@ -59,6 +64,11 @@ return packer.startup({
 				"kyazdani42/nvim-web-devicons", -- optional, for file icon
 			},
 			config = "require('nvim-tree-config')",
+			cmd = {
+				"NvimTreeToggle",
+				"NvimTreeRefresh",
+				"NvimTreeFindFile",
+			},
 		})
 		use({
 			"nvim-telescope/telescope.nvim",
@@ -76,7 +86,11 @@ return packer.startup({
 		use({
 			"nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",
-			requires = { "windwp/nvim-ts-autotag" },
+			requires = {
+				"windwp/nvim-ts-autotag",
+				"JoosepAlviste/nvim-ts-context-commentstring",
+				"p00f/nvim-ts-rainbow",
+			},
 			config = "require('treesitter-config')",
 		})
 
@@ -84,14 +98,16 @@ return packer.startup({
 		use({
 			"williamboman/nvim-lsp-installer",
 			config = "require('lsp-config')",
-		})
-		use({
-			"neovim/nvim-lspconfig",
+			requires = {
+				"neovim/nvim-lspconfig",
+				"b0o/SchemaStore.nvim", -- Json schemas
+			},
 		})
 		use({
 			"tami5/lspsaga.nvim",
 			branch = "nvim6.0",
 			config = "require('lsp-saga-config')",
+			after = "nvim-lsp-installer",
 		})
 		use({
 			"ray-x/lsp_signature.nvim",
@@ -100,12 +116,13 @@ return packer.startup({
 					hint_prefix = "🐢 ",
 				})
 			end,
+			after = "nvim-lsp-installer",
 		})
-		use("b0o/SchemaStore.nvim") -- Json schemas
 		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
 			config = "require('trouble-config')",
+			cmd = "Trouble",
 		})
 
 		-- Formatting, Diagnostics and Code Analysis, The best of both worlds!
@@ -119,7 +136,10 @@ return packer.startup({
 		use("hrsh7th/cmp-buffer")
 		use("hrsh7th/cmp-path")
 		use("hrsh7th/cmp-cmdline")
-		use("hrsh7th/cmp-nvim-lua")
+		use({
+			"hrsh7th/cmp-nvim-lua",
+			ft = { "lua", "vim", "nvim" },
+		})
 		use({ "David-Kunz/cmp-npm", requires = { "nvim-lua/plenary.nvim" } })
 		use("hrsh7th/nvim-cmp")
 		use("github/copilot.vim")
@@ -129,17 +149,10 @@ return packer.startup({
 		use({
 			"L3MON4D3/LuaSnip",
 			config = "require('luaSnip-config')",
+			requires = "rafamadriz/friendly-snippets",
 		})
-		use("rafamadriz/friendly-snippets")
 		use("saadparwaiz1/cmp_luasnip")
 
-		-- Tags
-		use({
-			"windwp/nvim-ts-autotag",
-			config = function()
-				require("nvim-ts-autotag").setup()
-			end,
-		})
 		use({
 			"windwp/nvim-autopairs",
 			config = function()
@@ -161,10 +174,6 @@ return packer.startup({
 		use({
 			"numToStr/Comment.nvim",
 			config = "require('Comment-config')",
-		})
-		use({
-			"JoosepAlviste/nvim-ts-context-commentstring",
-			after = "nvim-treesitter",
 		})
 
 		use({
@@ -196,9 +205,8 @@ return packer.startup({
 				"sindrets/diffview.nvim",
 			},
 			config = "require('neogit-config')",
+			cmd = "Neogit",
 		})
-
-		use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim", config = "require('diffview-config')" })
 
 		-- Markdown
 		use({
@@ -208,13 +216,14 @@ return packer.startup({
 				vim.g.mkdp_filetypes = { "markdown" }
 			end,
 			ft = { "markdown" },
+			cmd = "MarkdownPreview",
 		})
 
 		-- Cursor
 		use("xiyaowong/nvim-cursorword")
 
 		-- Search And Replace
-		use({ "windwp/nvim-spectre", config = "require('spectre-config')" })
+		use("windwp/nvim-spectre")
 
 		-- Debugger
 		use({
@@ -231,6 +240,7 @@ return packer.startup({
 			config = function()
 				require("dapui").setup()
 			end,
+			after = "nvim-dap",
 		})
 
 		use({
@@ -238,10 +248,11 @@ return packer.startup({
 			config = function()
 				require("nvim-dap-virtual-text").setup()
 			end,
+			after = "nvim-dap",
 		})
 
 		-- Terminal
-		use({ "akinsho/toggleterm.nvim", config = "require('toggleterm-config')" })
+		use({ "akinsho/toggleterm.nvim", config = "require('toggleterm-config')", cmd = "ToggleTerm" })
 
 		-- Scroll
 		use({ "petertriho/nvim-scrollbar", config = "require('scrollbar-config')" })
