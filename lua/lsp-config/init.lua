@@ -1,5 +1,3 @@
-local nvim_lsp = require("lspconfig")
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -69,16 +67,33 @@ local on_attach = function(client, bufnr)
 	client.resolved_capabilities.document_range_formatting = false
 end
 
+local has_words_before = function()
+	---@diagnostic disable-next-line: deprecated
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+local luasnip = require("luasnip")
 
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
+local source_mapping = {
+	buffer = "[Buffer]",
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[Lua]",
+	path = "[Path]",
+}
+
 cmp.setup({
 	formatting = {
-		format = lspkind.cmp_format(),
+		format = lspkind.cmp_format({
+			with_text = false,
+			menu = source_mapping,
+		}),
 	},
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
@@ -96,6 +111,27 @@ cmp.setup({
 			c = cmp.mapping.close(),
 		}),
 		["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
 	},
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
@@ -199,6 +235,7 @@ local servers = {
 	"intelephense",
 	"volar",
 	"jsonls",
+	"sumneko_lua",
 }
 
 for _, name in pairs(servers) do
@@ -208,28 +245,3 @@ for _, name in pairs(servers) do
 		server:install()
 	end
 end
--- for _, lsp in ipairs(servers) do
--- 	nvim_lsp[lsp].setup({
--- 		on_attach = on_attach,
--- 		flags = {
--- 			debounce_text_changes = 150,
--- 		},
--- 		root_dir = vim.loop.cwd,
--- 		capabilities = capabilities,
--- 	})
--- end
-
--- Config JSONls
--- nvim_lsp.jsonls.setup({
--- 	on_attach = on_attach,
--- 	capabilities = capabilities,
--- 	flags = {
--- 		debounce_text_changes = 150,
--- 	},
--- 	root_dir = vim.loop.cwd,
--- 	settings = {
--- 		json = {
--- 			schemas = require("schemastore").json.schemas(),
--- 		},
--- 	},
--- })
