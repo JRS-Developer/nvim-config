@@ -246,12 +246,6 @@ return packer.startup({
 			config = "require('which-key-config')",
 		})
 
-		-- Tmux
-		use({
-			"aserowy/tmux.nvim",
-			config = 'require("tmux-config")',
-		})
-
 		-- Automatically set up your configuration after cloning packer.nvim
 		-- Put this at the end after all plugins
 		if packer_bootstrap then
