@@ -105,6 +105,12 @@ return packer.startup({
 			after = "nvim-lsp-installer",
 		})
 		use({
+			"kosayoda/nvim-lightbulb",
+			config = function()
+				vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+			end,
+		})
+		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
 			config = "require('trouble-config')",
