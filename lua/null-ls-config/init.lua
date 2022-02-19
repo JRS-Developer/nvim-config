@@ -9,9 +9,10 @@ local sources = {
 	builtins.formatting.prettierd.with({
 		prefer_local = "node_modules/.bin",
 	}),
-	builtins.formatting.phpcsfixer,
-	builtins.diagnostics.phpcs,
-	builtins.formatting.rustywind, --Tailwind
+	builtins.formatting.phpcbf, -- Php Code Sniffer Formatter
+	builtins.diagnostics.phpcs, -- Php Code Sniffer Linter
+	builtins.diagnostics.pylama, -- Python linter, useful?
+	builtins.formatting.rustywind, --Tailwind class order
 }
 
 null_ls.setup({
