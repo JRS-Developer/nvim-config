@@ -10,7 +10,11 @@ local sources = {
 		prefer_local = "node_modules/.bin",
 	}),
 	builtins.formatting.phpcbf, -- Php Code Sniffer Formatter
+	builtins.formatting.phpcsfixer, -- Php Code Sniffer Formatter (PHP-CS-Fixer)
 	builtins.diagnostics.phpcs, -- Php Code Sniffer Linter
+	builtins.diagnostics.phpmd.with({
+		extra_args = { "phpmd.xml" },
+	}), -- Php Mess Detector
 	builtins.diagnostics.pylama, -- Python linter, useful?
 	builtins.formatting.rustywind, --Tailwind class order
 }
