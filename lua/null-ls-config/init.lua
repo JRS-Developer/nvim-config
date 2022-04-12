@@ -11,12 +11,14 @@ local sources = {
 	}),
 	builtins.formatting.phpcbf, -- Php Code Sniffer Formatter
 	builtins.formatting.phpcsfixer, -- Php Code Sniffer Formatter (PHP-CS-Fixer)
+	builtins.formatting.rustywind, --Tailwind class order
+
+	-- Diagnostics
 	builtins.diagnostics.phpcs, -- Php Code Sniffer Linter
 	builtins.diagnostics.phpmd.with({
 		extra_args = { "phpmd.xml" },
 	}), -- Php Mess Detector
 	builtins.diagnostics.pylama, -- Python linter, useful?
-	builtins.formatting.rustywind, --Tailwind class order
 }
 
 null_ls.setup({
