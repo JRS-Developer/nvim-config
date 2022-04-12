@@ -223,7 +223,7 @@ local servers = {
 	"tsserver",
 	"vimls",
 	"cssls",
-	"eslint",
+	-- "eslint",
 	"html",
 	-- "cssmodules_ls",
 	-- "stylelint_lsp",
