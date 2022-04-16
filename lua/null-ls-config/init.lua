@@ -8,6 +8,7 @@ local sources = {
 	builtins.formatting.gofmt, --Go
 	builtins.formatting.prettierd.with({
 		prefer_local = "node_modules/.bin",
+		extra_filetypes = { "prisma" },
 	}),
 	builtins.formatting.phpcbf, -- Php Code Sniffer Formatter
 	builtins.formatting.phpcsfixer, -- Php Code Sniffer Formatter (PHP-CS-Fixer)
