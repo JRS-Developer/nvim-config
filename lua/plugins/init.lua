@@ -85,7 +85,6 @@ return packer.startup({
 		})
 		use({
 			"tami5/lspsaga.nvim",
-			branch = "nvim6.0",
 			config = "require('lsp-saga-config')",
 			after = "nvim-lsp-installer",
 		})
