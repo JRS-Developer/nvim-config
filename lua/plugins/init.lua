@@ -62,12 +62,6 @@ return packer.startup({
 			config = "require('telescope-config')",
 		})
 
-		-- Projects
-		use({
-			"ahmedkhalf/project.nvim",
-			config = "require('project-config')",
-		})
-
 		-- Sintax
 		use({
 			"nvim-treesitter/nvim-treesitter",
