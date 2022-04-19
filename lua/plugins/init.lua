@@ -195,7 +195,6 @@ return packer.startup({
 			"TimUntersberger/neogit",
 			requires = {
 				"nvim-lua/plenary.nvim",
-				"sindrets/diffview.nvim",
 			},
 			config = "require('neogit-config')",
 			cmd = "Neogit",
