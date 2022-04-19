@@ -243,9 +243,6 @@ return packer.startup({
 			after = "nvim-dap",
 		})
 
-		-- Scroll
-		use({ "petertriho/nvim-scrollbar", config = "require('scrollbar-config')" })
-
 		-- Keymaps
 		use({
 			"folke/which-key.nvim",
