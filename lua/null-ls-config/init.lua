@@ -12,7 +12,6 @@ local sources = {
 	}),
 	builtins.formatting.phpcbf, -- Php Code Sniffer Formatter
 	builtins.formatting.phpcsfixer, -- Php Code Sniffer Formatter (PHP-CS-Fixer)
-	builtins.formatting.rustywind, --Tailwind class order
 
 	-- Diagnostics
 	builtins.diagnostics.phpcs, -- Php Code Sniffer Linter
