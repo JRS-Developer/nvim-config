@@ -223,9 +223,9 @@ local servers = {
 	"emmet_ls",
 	"pyright",
 	"gopls",
-	"golangci_lint_ls",
+	-- "golangci_lint_ls",
 	"intelephense",
-	"volar",
+	-- "volar",
 	"jsonls",
 	"sumneko_lua",
 }
