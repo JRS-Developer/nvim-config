@@ -221,7 +221,7 @@ return packer.startup({
 		use({
 			"mfussenegger/nvim-dap",
 			requires = {
-				"Pocco81/DAPInstall.nvim",
+				"Pocco81/dap-buddy.nvim",
 			},
 			config = "require('dap-config')",
 		})
