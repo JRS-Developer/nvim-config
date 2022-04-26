@@ -139,6 +139,11 @@ local mappings = {
 		},
 		u = { ':lua require("dapui").toggle()<CR>', "Toggle UI" },
 	},
+	c = {
+		name = "BufferLine Close",
+		l = { "<cmd>BufferLineCloseLeft<cr>", "Close Left" },
+		r = { "<cmd>BufferLineCloseRight<cr>", "Close Right" },
+	},
 }
 
 which_key.register(mappings, opts)
