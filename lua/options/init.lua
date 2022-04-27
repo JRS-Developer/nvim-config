@@ -43,6 +43,7 @@ vim.opt.updatetime = 300 -- time to wait for a redraw (in milliseconds)
 vim.opt.backup = false -- creates a backup file
 vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 vim.opt.swapfile = false -- creates a swapfile
+vim.opt.viewoptions = "folds,cursor"
 
 vim.cmd("autocmd BufWinLeave *.* silent! mkview!") -- Create a view for each file
 vim.cmd("autocmd BufWinEnter *.* silent! loadview") -- Load the view for each file
