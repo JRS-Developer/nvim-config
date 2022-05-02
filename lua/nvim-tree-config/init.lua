@@ -3,7 +3,6 @@ vim.g.nvim_tree_respect_buf_cwd = 1
 require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
 	auto_reload_on_write = true,
 	disable_netrw = false,
-	-- hide_root_folder = false, -- This dont work
 	hijack_cursor = false,
 	hijack_netrw = true,
 	hijack_unnamed_buffer_when_opening = false,
@@ -70,12 +69,11 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
 	},
 	git = {
 		enable = true,
-		ignore = true,
+		ignore = false,
 		timeout = 400,
 	},
 	actions = {
-		-- use_system_clipboard = true, -- This also dont work
-		use_sys_clipboard = true, -- But this work
+		use_system_clipboard = true,
 		change_dir = {
 			enable = true,
 			global = false,
