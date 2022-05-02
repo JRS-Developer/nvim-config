@@ -26,6 +26,9 @@ return packer.startup({
 			config = "require('dashboard-config')",
 		})
 
+		-- Editor Config
+		use("editorconfig/editorconfig-vim")
+
 		-- Themes And Colors
 		use({
 			"catppuccin/nvim",
