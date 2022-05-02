@@ -145,7 +145,7 @@ return packer.startup({
 		use({
 			"L3MON4D3/LuaSnip",
 			config = "require('luaSnip-config')",
-			requires = "rafamadriz/friendly-snippets",
+			requires = "JRS-Developer/friendly-snippets",
 		})
 		use("saadparwaiz1/cmp_luasnip")
 
