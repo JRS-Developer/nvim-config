@@ -28,7 +28,7 @@ local color_palette = {
 
 -- configure it
 catppuccin.setup({
-	transparent_background = true,
+	transparent_background = false,
 	term_colors = true,
 	styles = {
 		comments = "italic",
@@ -63,7 +63,7 @@ catppuccin.setup({
 		nvimtree = {
 			enabled = true,
 			show_root = false,
-			transparent_panel = true, -- make the panel transparent
+			transparent_panel = false, -- make the panel transparent
 		},
 		which_key = false,
 		indent_blankline = {
