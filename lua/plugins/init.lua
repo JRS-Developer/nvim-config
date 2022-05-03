@@ -147,6 +147,10 @@ return packer.startup({
 			config = "require('luaSnip-config')",
 			requires = "JRS-Developer/friendly-snippets",
 		})
+		use({
+			"dsznajder/vscode-es7-javascript-react-snippets",
+			run = "yarn install --frozen-lockfile && yarn compile",
+		})
 		use("saadparwaiz1/cmp_luasnip")
 
 		use({
