@@ -102,8 +102,9 @@ return packer.startup({
 		})
 		use({
 			"kosayoda/nvim-lightbulb",
+			requires = "antoinemadec/FixCursorHold.nvim",
 			config = function()
-				vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+				require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 			end,
 		})
 		use({
