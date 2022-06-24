@@ -131,15 +131,15 @@ return packer.startup({
 		})
 		use({ "David-Kunz/cmp-npm", requires = { "nvim-lua/plenary.nvim" } })
 		use("hrsh7th/nvim-cmp")
-		use({
-			"github/copilot.vim",
-			setup = function()
-				vim.cmd([[
-          imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-          let g:copilot_no_tab_map = v:true
-        ]])
-			end,
-		})
+		-- use({
+		-- 	"github/copilot.vim",
+		-- 	setup = function()
+		-- 		vim.cmd([[
+		--         imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+		--         let g:copilot_no_tab_map = v:true
+		--       ]])
+		-- 	end,
+		-- })
 		use("onsails/lspkind-nvim")
 
 		-- Snippets
