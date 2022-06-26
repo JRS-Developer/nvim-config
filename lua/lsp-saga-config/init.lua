@@ -1,3 +1,3 @@
-local lspsaga = require 'lspsaga'
+local lspsaga = require("lspsaga")
 
-lspsaga.setup()
+lspsaga.init_lsp_saga()
