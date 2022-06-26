@@ -101,13 +101,6 @@ return packer.startup({
 			after = "nvim-lsp-installer",
 		})
 		use({
-			"kosayoda/nvim-lightbulb",
-			requires = "antoinemadec/FixCursorHold.nvim",
-			config = function()
-				require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
-			end,
-		})
-		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
 			config = "require('trouble-config')",
