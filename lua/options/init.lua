@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-
 -- Left side
 -- vim.o.relativenumber = true -- It is lagging the scroll :(
 vim.o.number = true
