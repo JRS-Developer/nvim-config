@@ -94,6 +94,10 @@ local mappings = {
 		b = { "<cmd>Telescope buffers<cr>", "Find Buffer" },
 		h = { "<cmd>Telescope help_tags<cr>", "Find Tag" },
 	},
+	t = {
+		"<cmd>ToggleTerm<cr>",
+		"ToggleTerm",
+	},
 	x = {
 		name = "Trouble",
 		x = { "<cmd>Trouble<cr>", "Trouble" },
