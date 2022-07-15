@@ -1,5 +1,16 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = "all",
+	ensure_installed = {
+		"html",
+		"css",
+		"lua",
+		"scss",
+		"vim",
+		"javascript",
+		"typescript",
+		"tsx",
+		"prisma",
+		"markdown",
+	},
 
 	context_commentstring = {
 		enable = true,
