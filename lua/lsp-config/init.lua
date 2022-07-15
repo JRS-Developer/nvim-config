@@ -10,6 +10,7 @@ local on_attach = function(client, bufnr)
 
 	-- Vim Illuminate
 	require("illuminate").on_attach(client)
+	vim.g.Illuminate_ftblacklist = { "NvimTree" }
 
 	-- Enable completion triggered by <c-x><c-o>
 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
