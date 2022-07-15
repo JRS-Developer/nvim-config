@@ -229,7 +229,7 @@ local servers = {
 	"pyright",
 	"gopls",
 	-- "golangci_lint_ls",
-	"intelephense",
+	-- "intelephense",
 	-- "volar",
 	"jsonls",
 	"sumneko_lua",
