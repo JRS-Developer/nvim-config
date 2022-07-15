@@ -213,7 +213,8 @@ return packer.startup({
 		})
 
 		-- Cursor
-		use("xiyaowong/nvim-cursorword")
+		-- use("xiyaowong/nvim-cursorword")
+		use("RRethy/vim-illuminate")
 
 		-- Search And Replace
 		use("windwp/nvim-spectre")
