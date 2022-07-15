@@ -265,7 +265,7 @@ return packer.startup({
 	end,
 	config = {
 		git = {
-			clone_timout = 1000,
+			clone_timeout = 1000,
 		},
 		display = {
 			open_fn = require("packer.util").float,
