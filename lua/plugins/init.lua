@@ -79,17 +79,19 @@ return packer.startup({
 
 		-- LSP
 		use({
-			"williamboman/nvim-lsp-installer",
+			"williamboman/mason.nvim",
 			config = "require('lsp-config')",
 			requires = {
 				"neovim/nvim-lspconfig",
+				"williamboman/mason-lspconfig.nvim",
+				"WhoIsSethDaniel/mason-tool-installer.nvim",
 				"b0o/SchemaStore.nvim", -- Json schemas
 			},
 		})
 		use({
 			"glepnir/lspsaga.nvim",
 			config = "require('lsp-saga-config')",
-			after = "nvim-lsp-installer",
+			after = "mason-lspconfig.nvim",
 		})
 		use({
 			"ray-x/lsp_signature.nvim",
@@ -98,7 +100,7 @@ return packer.startup({
 					hint_prefix = "🐢 ",
 				})
 			end,
-			after = "nvim-lsp-installer",
+			after = "mason-lspconfig.nvim",
 		})
 		use({
 			"folke/trouble.nvim",
