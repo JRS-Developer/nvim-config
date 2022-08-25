@@ -1,9 +1,7 @@
-local catppuccin = require("catppuccin")
-
-vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 
 -- configure it
-catppuccin.setup({
+require("catppuccin").setup({
 	dim_inactive = {
 		enabled = false,
 		shade = "dark",
@@ -12,7 +10,7 @@ catppuccin.setup({
 	transparent_background = false,
 	term_colors = true,
 	compile = {
-		enabled = false,
+		enabled = true,
 		path = vim.fn.stdpath("cache") .. "/catppuccin",
 	},
 	styles = {
@@ -90,9 +88,10 @@ catppuccin.setup({
 		aerial = false,
 		vimwiki = true,
 		beacon = true,
+		navic = false,
+		overseer = false,
 	},
 	color_overrides = {},
 	highlight_overrides = {},
 })
-
 vim.cmd([[colorscheme catppuccin]])
