@@ -15,28 +15,7 @@ require("bufferline").setup({
 			return s
 		end,
 	},
-	highlights = {
-		close_button = {
-			guifg = colors.red,
-		},
-		close_button_selected = {
-			guifg = colors.red,
-		},
-		tab_close = {
-			guifg = colors.red,
-			guibg = colors.black1,
-		},
-		modified = {
-			guifg = colors.red,
-		},
-
-		modified_visible = {
-			guifg = colors.red,
-		},
-		modified_selected = {
-			guifg = colors.red,
-		},
-	},
+	highlights = {},
 })
 
 vim.api.nvim_set_keymap("n", "<A-1>", "<Cmd>BufferLineGoToBuffer 1<CR>", { noremap = true })
