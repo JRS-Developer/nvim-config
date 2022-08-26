@@ -44,6 +44,11 @@ local on_attach = function(client, bufnr)
 			end,
 		})
 	end
+
+	-- Keymaps
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 end
 
 local has_words_before = function()
