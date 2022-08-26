@@ -127,15 +127,27 @@ return packer.startup({
 		})
 		use({ "David-Kunz/cmp-npm", requires = { "nvim-lua/plenary.nvim" } })
 		use("hrsh7th/nvim-cmp")
+
+		-- Copilot
 		use({
-			"github/copilot.vim",
-			setup = function()
-				vim.cmd([[
-		         imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-		         let g:copilot_no_tab_map = v:true
-		       ]])
+			"zbirenbaum/copilot.lua",
+			event = { "VimEnter" },
+			config = function()
+				vim.defer_fn(function()
+					require("copilot").setup({
+						cmp = {
+							enabled = true,
+							method = "getCompletionsCycling",
+						},
+					})
+				end, 100)
 			end,
 		})
+		use({
+			"zbirenbaum/copilot-cmp",
+			module = "copilot_cmp",
+		})
+
 		use("onsails/lspkind-nvim")
 
 		-- Snippets
@@ -155,8 +167,15 @@ return packer.startup({
 				})
 			end,
 		})
-		use("tpope/vim-surround") -- surround characters shortcuts
-
+		use({
+			"kylechui/nvim-surround",
+			tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+			config = function()
+				require("nvim-surround").setup({
+					-- Configuration here, or leave empty to use defaults
+				})
+			end,
+		})
 		-- Tabs
 		use({
 			"akinsho/bufferline.nvim",
