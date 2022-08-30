@@ -59,11 +59,14 @@ return packer.startup({
 				"kyazdani42/nvim-web-devicons", -- optional, for file icon
 			},
 			config = "require('nvim-tree-config')",
+			cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+			ft = { "netrw" },
 		})
 		use({
 			"nvim-telescope/telescope.nvim",
 			requires = { "nvim-lua/plenary.nvim" },
 			config = "require('telescope-config')",
+			cmd = "Telescope",
 		})
 
 		-- Sintax
@@ -186,6 +189,7 @@ return packer.startup({
 		-- Comments
 		use({
 			"numToStr/Comment.nvim",
+			keys = { "gc", "gb" },
 			config = "require('Comment-config')",
 		})
 
@@ -218,6 +222,7 @@ return packer.startup({
 			},
 			config = "require('neogit-config')",
 			cmd = "Neogit",
+			opt = true,
 		})
 
 		-- Markdown
@@ -268,6 +273,7 @@ return packer.startup({
 		use({
 			"folke/which-key.nvim",
 			config = "require('which-key-config')",
+			keys = { "<leader>" },
 		})
 
 		-- Time Tracking
