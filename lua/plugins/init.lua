@@ -64,7 +64,7 @@ return packer.startup({
 		})
 		use({
 			"nvim-telescope/telescope.nvim",
-			requires = { "nvim-lua/plenary.nvim" },
+			requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-fzy-native.nvim" },
 			config = "require('telescope-config')",
 			cmd = "Telescope",
 		})
@@ -148,7 +148,10 @@ return packer.startup({
 		})
 		use({
 			"zbirenbaum/copilot-cmp",
-			module = "copilot_cmp",
+			after = { "copilot.lua" },
+			config = function()
+				require("copilot_cmp").setup()
+			end,
 		})
 
 		use("onsails/lspkind-nvim")
