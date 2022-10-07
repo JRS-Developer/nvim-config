@@ -279,9 +279,6 @@ return packer.startup({
 			keys = { "<leader>" },
 		})
 
-		-- Time Tracking
-		use("wakatime/vim-wakatime")
-
 		-- Terminal
 		use({ "akinsho/toggleterm.nvim", tag = "v2.*", config = "require('toggleterm-config')" })
 
