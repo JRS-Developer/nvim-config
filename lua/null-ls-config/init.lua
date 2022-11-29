@@ -19,6 +19,7 @@ local sources = {
 		extra_args = { "phpmd.xml" },
 	}), -- Php Mess Detector
 	builtins.diagnostics.pylama, -- Python linter, useful?
+	builtins.diagnostics.actionlint,
 }
 
 null_ls.setup({

@@ -17,7 +17,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
 	reload_on_bufenter = false,
 	respect_buf_cwd = false,
 	view = {
-		adaptive_size = false,
+		adaptive_size = true,
 		centralize_selection = false,
 		width = 30,
 		hide_root_folder = true,

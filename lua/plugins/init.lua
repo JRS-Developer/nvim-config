@@ -228,6 +228,8 @@ return packer.startup({
 			opt = true,
 		})
 
+		use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
+
 		-- Markdown
 		use({
 			"iamcco/markdown-preview.nvim",
@@ -236,11 +238,9 @@ return packer.startup({
 				vim.g.mkdp_filetypes = { "markdown" }
 			end,
 			ft = { "markdown" },
-			cmd = "MarkdownPreview",
 		})
 
 		-- Cursor
-		-- use("xiyaowong/nvim-cursorword")
 		use("RRethy/vim-illuminate")
 
 		-- Search And Replace

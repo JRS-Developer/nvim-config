@@ -1,5 +1,3 @@
-vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
-
 -- configure it
 require("catppuccin").setup({
 	dim_inactive = {
@@ -7,6 +5,7 @@ require("catppuccin").setup({
 		shade = "dark",
 		percentage = 0.15,
 	},
+	flavour = "macchiato", -- latte, frappe, macchiato, mocha
 	transparent_background = false,
 	term_colors = true,
 	compile = {
@@ -28,7 +27,27 @@ require("catppuccin").setup({
 		operators = {},
 	},
 	integrations = {
+		lsp_saga = true,
+		neogit = true,
+		telescope = true,
+		cmp = true,
+		mason = true,
+		markdown = true,
+		gitsigns = true,
+		dashboard = true,
+		nvimtree = true,
 		treesitter = true,
+		which_key = true,
+		illuminate = true,
+		dap = {
+			enabled = false,
+			enable_ui = false,
+		},
+		ts_rainbow = true,
+		indent_blankline = {
+			enabled = false,
+			colored_indent_levels = false,
+		},
 		native_lsp = {
 			enabled = true,
 			virtual_text = {
@@ -44,54 +63,8 @@ require("catppuccin").setup({
 				information = { "underline" },
 			},
 		},
-		coc_nvim = false,
-		lsp_trouble = true,
-		cmp = true,
-		lsp_saga = true,
-		gitgutter = false,
-		gitsigns = true,
-		leap = false,
-		telescope = false,
-		nvimtree = {
-			enabled = true,
-			show_root = false,
-			transparent_panel = false,
-		},
-		neotree = {
-			enabled = false,
-			show_root = true,
-			transparent_panel = false,
-		},
-		dap = {
-			enabled = true,
-			enable_ui = true,
-		},
-		which_key = true,
-		indent_blankline = {
-			enabled = false,
-			colored_indent_levels = false,
-		},
-		dashboard = true,
-		neogit = true,
-		vim_sneak = false,
-		fern = false,
-		barbar = false,
-		bufferline = true,
-		markdown = true,
-		lightspeed = false,
-		ts_rainbow = true,
-		hop = false,
-		notify = true,
-		telekasten = true,
-		symbols_outline = true,
-		mini = false,
-		aerial = false,
-		vimwiki = true,
-		beacon = true,
-		navic = false,
-		overseer = false,
 	},
 	color_overrides = {},
 	highlight_overrides = {},
 })
-vim.cmd([[colorscheme catppuccin]])
+vim.api.nvim_command("colorscheme catppuccin")
