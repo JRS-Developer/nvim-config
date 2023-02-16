@@ -1,15 +1,43 @@
-local dap_install = require("dap-buddy")
+local dap = require("dap")
 
---dap_install.setup({
---	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
---})
+dap.adapters.chrome = {
+	type = "executable",
+	command = "node",
+	args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js" }, -- TODO adjust
+}
+dap.adapters.node2 = {
+	type = "executable",
+	command = "node",
+	args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodeDebug.js" },
+}
 
--- Configure each dap server already installed
--- local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+local react_config = {
+	{
+		type = "chrome",
+		request = "attach",
+		program = "${file}",
+		cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		protocol = "inspector",
+		port = 9222,
+		webRoot = "${workspaceFolder}",
+	},
+}
 
---for _, debugger in ipairs(dbg_list) do
---	dap_install.config(debugger)
---end
+local js_config = {
+	{
+		name = "Launch",
+		type = "node2",
+		request = "launch",
+		program = "${file}",
+		cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		protocol = "inspector",
+		console = "integratedTerminal",
+	},
+}
 
--- Icons
---vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+dap.configurations.javascript = js_config
+dap.configurations.typescript = js_config
+dap.configurations.javascriptreact = react_config
+dap.configurations.typescriptreact = react_config

@@ -1,7 +1,7 @@
 local keymap = vim.keymap.set
 local saga = require("lspsaga")
 
-saga.init_lsp_saga()
+saga.setup({})
 
 -- Lsp finder find the symbol definition implement reference
 -- when you use action in finder like open vsplit then you can
@@ -16,7 +16,10 @@ keymap("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = 
 keymap("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 
 -- Definition preview
-keymap("n", "gD", "<cmd>Lspsaga preview_definition<CR>", { silent = true })
+keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+
+-- Go to Definition
+keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true })
 
 -- Show line diagnostics
 keymap("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
@@ -30,11 +33,11 @@ keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
 
 -- Only jump to error
 keymap("n", "[E", function()
-	require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end, { silent = true })
+	require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end)
 keymap("n", "]E", function()
-	require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
-end, { silent = true })
+	require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+end)
 
 -- Outline
 keymap("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })

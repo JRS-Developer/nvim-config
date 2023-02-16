@@ -101,6 +101,11 @@ local mappings = {
 	x = {
 		name = "Trouble",
 		x = { "<cmd>Trouble<cr>", "Trouble" },
+		w = { "<cmd>Trouble workspace_diagnostics<cr>", "Trouble Workspace Diagnostics" },
+		d = { "<cmd>Trouble document_diagnostics<cr>", "Trouble Document Diagnostics" },
+		l = { "<cmd>Trouble locklist<cr>", "Trouble Locklist" },
+		q = { "<cmd>Trouble quickfix<cr>", "Trouble Quickfix" },
+		t = { "<cmd>Trouble telescope<cr>", "Trouble Telescope" },
 	},
 	g = { "<cmd>Neogit kind=vsplit <cr>", "Neogit" },
 	s = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search Replace Current Word" },

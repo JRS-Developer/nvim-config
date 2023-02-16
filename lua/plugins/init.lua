@@ -89,13 +89,14 @@ return packer.startup({
 				"neovim/nvim-lspconfig",
 				"williamboman/mason-lspconfig.nvim",
 				"WhoIsSethDaniel/mason-tool-installer.nvim",
+				"jose-elias-alvarez/typescript.nvim",
 				"b0o/SchemaStore.nvim", -- Json schemas
 			},
 		})
 		use({
 			"glepnir/lspsaga.nvim",
 			config = "require('lsp-saga-config')",
-			after = "mason-lspconfig.nvim",
+			event = "BufRead",
 		})
 		use({
 			"ray-x/lsp_signature.nvim",
@@ -230,6 +231,14 @@ return packer.startup({
 
 		use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 
+		use({
+			"akinsho/git-conflict.nvim",
+			tag = "*",
+			config = function()
+				require("git-conflict").setup()
+			end,
+		})
+
 		-- Markdown
 		use({
 			"iamcco/markdown-preview.nvim",
@@ -249,9 +258,6 @@ return packer.startup({
 		-- Debugger
 		use({
 			"mfussenegger/nvim-dap",
-			requires = {
-				"Pocco81/dap-buddy.nvim",
-			},
 			config = "require('dap-config')",
 		})
 

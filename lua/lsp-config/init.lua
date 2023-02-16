@@ -44,11 +44,6 @@ local on_attach = function(client, bufnr)
 			end,
 		})
 	end
-
-	-- Keymaps
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 end
 
 local has_words_before = function()
@@ -181,12 +176,12 @@ local servers = {
 	"tailwindcss",
 	"emmet_ls",
 	"pyright",
-	"gopls",
+	--[[ "gopls", ]]
 	-- "golangci_lint_ls",
 	-- "intelephense",
 	-- "volar",
 	"jsonls",
-	"sumneko_lua",
+	"lua_ls",
 }
 
 require("mason").setup()
@@ -211,7 +206,7 @@ masonLsp.setup({
 for _, name in pairs(masonLsp.get_installed_servers()) do
 	local opts = {}
 
-	if name == "sumneko_lua" then
+	if name == "lua_ls" then
 		opts.settings = {
 			Lua = {
 				diagnostics = {
@@ -228,6 +223,12 @@ for _, name in pairs(masonLsp.get_installed_servers()) do
 		opts.settings = {
 			json = {
 				schemas = require("schemastore").json.schemas(),
+				format = {
+					enable = true,
+				},
+				validate = {
+					enable = true,
+				},
 			},
 		}
 	end
@@ -235,8 +236,24 @@ for _, name in pairs(masonLsp.get_installed_servers()) do
 	opts.on_attach = on_attach
 	opts.capabilities = capabilities
 	opts.root_dir = vim.loop.cwd
+
+	-- https://github.com/jose-elias-alvarez/typescript.nvim -- Avoid tsserver
 	-- This setup() function will take the provided server configuration and decorate it with the necessary properties
 	-- before passing it onwards to lspconfig.
 	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-	lspconfig[name].setup(opts)
+	if name ~= "tsserver" then
+		lspconfig[name].setup(opts)
+	end
 end
+
+-- Config for tsserver
+require("typescript").setup({
+	disable_commands = false, -- prevent the plugin from creating Vim commands
+	debug = false, -- enable debug logging for commands
+	go_to_source_definition = {
+		fallback = true, -- fall back to standard LSP definition on failure
+	},
+	server = { -- pass options to lspconfig's setup method
+		on_attach = on_attach,
+	},
+})

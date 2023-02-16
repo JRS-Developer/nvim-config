@@ -20,6 +20,10 @@ local sources = {
 	}), -- Php Mess Detector
 	builtins.diagnostics.pylama, -- Python linter, useful?
 	builtins.diagnostics.actionlint,
+
+	-- Code Actions
+	builtins.code_actions.gitsigns,
+	require("typescript.extensions.null-ls.code-actions"),
 }
 
 null_ls.setup({
