@@ -88,12 +88,10 @@ local opts = {
 
 local mappings = {
 	p = {
-		name = "Packer",
-		c = { "<cmd>PackerCompile<cr>", "Compile" },
-		i = { "<cmd>PackerInstall<cr>", "Install" },
-		s = { "<cmd>PackerSync<cr>", "Sync" },
-		S = { "<cmd>PackerStatus<cr>", "Status" },
-		u = { "<cmd>PackerUpdate<cr>", "Update" },
+		name = "Lazy",
+		s = { "<cmd>Lazy sync<cr>", "Sync" },
+		S = { "<cmd>Lazy home<cr>", "Status" },
+		u = { "<cmd>Lazy update<cr>", "Update" },
 	},
 	f = {
 		name = "File",
