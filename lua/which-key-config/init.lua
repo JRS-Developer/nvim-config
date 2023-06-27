@@ -3,6 +3,14 @@ if not status_ok then
 	return
 end
 
+-- Reads the .vscode/launch.json file and loads it into dap
+local continue = function()
+	if vim.fn.filereadable(".vscode/launch.json") then
+		require("dap.ext.vscode").load_launchjs(nil, { node = { "javascript", "node2" } })
+	end
+	require("dap").continue()
+end
+
 local setup = {
 	plugins = {
 		marks = true, -- shows a list of your marks on ' and `
@@ -122,7 +130,7 @@ local mappings = {
 	},
 	d = {
 		name = "DAP",
-		c = { ':lua require("dap").continue()<CR>', "Continue" },
+		c = { continue, "Continue" },
 		t = { ':lua require("dap").terminate()<CR>', "Terminate" },
 		l = { ':lua require("dap").run_last()<CR>', "Run Last Debugging Config" },
 		d = { ':lua require("dap").repl.open()<CR>', "Open Debug Console" },

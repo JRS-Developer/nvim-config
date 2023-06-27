@@ -206,6 +206,18 @@ masonLsp.setup({
 for _, name in pairs(masonLsp.get_installed_servers()) do
 	local opts = {}
 
+	if name == "tailwindcss" then
+		opts.settings = {
+			tailwindCSS = {
+				experimental = {
+					classRegex = {
+						{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+					},
+				},
+			},
+		}
+	end
+
 	if name == "lua_ls" then
 		opts.settings = {
 			Lua = {

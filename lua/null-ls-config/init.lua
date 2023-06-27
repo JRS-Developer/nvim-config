@@ -12,6 +12,7 @@ local sources = {
 	}),
 	builtins.formatting.phpcbf, -- Php Code Sniffer Formatter
 	builtins.formatting.phpcsfixer, -- Php Code Sniffer Formatter (PHP-CS-Fixer)
+	builtins.formatting.clang_format,
 
 	-- Diagnostics
 	builtins.diagnostics.phpcs, -- Php Code Sniffer Linter
@@ -20,6 +21,8 @@ local sources = {
 	}), -- Php Mess Detector
 	builtins.diagnostics.pylama, -- Python linter, useful?
 	builtins.diagnostics.actionlint,
+	builtins.diagnostics.cpplint,
+	builtins.diagnostics.hadolint,
 
 	-- Code Actions
 	builtins.code_actions.gitsigns,

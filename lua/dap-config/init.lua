@@ -1,5 +1,6 @@
-local dap = require("dap")
+local dap, dapui = require("dap"), require("dapui")
 
+-- Adapters config
 dap.adapters.chrome = {
 	type = "executable",
 	command = "node",
@@ -10,6 +11,22 @@ dap.adapters.node2 = {
 	command = "node",
 	args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodeDebug.js" },
 }
+dap.adapters.node = {
+	type = "executable",
+	command = "node",
+	args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodeDebug.js" },
+}
+
+-- Listeners for dap ui
+dap.listeners.after.event_initialized["dapui_config"] = function()
+	dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+	dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+	dapui.close()
+end
 
 local react_config = {
 	{
@@ -24,20 +41,20 @@ local react_config = {
 	},
 }
 
-local js_config = {
-	{
-		name = "Launch",
-		type = "node2",
-		request = "launch",
-		program = "${file}",
-		cwd = vim.fn.getcwd(),
-		sourceMaps = true,
-		protocol = "inspector",
-		console = "integratedTerminal",
-	},
-}
+--[[ local js_config = { ]]
+--[[ 	{ ]]
+--[[ 		name = "Launch", ]]
+--[[ 		type = "node2", ]]
+--[[ 		request = "launch", ]]
+--[[ 		program = "${file}", ]]
+--[[ 		cwd = vim.fn.getcwd(), ]]
+--[[ 		sourceMaps = true, ]]
+--[[ 		protocol = "inspector", ]]
+--[[ 		console = "integratedTerminal", ]]
+--[[ 	}, ]]
+--[[ } ]]
 
-dap.configurations.javascript = js_config
-dap.configurations.typescript = js_config
+--[[ dap.configurations.javascript = js_config ]]
+--[[ dap.configurations.typescript = js_config ]]
 dap.configurations.javascriptreact = react_config
 dap.configurations.typescriptreact = react_config

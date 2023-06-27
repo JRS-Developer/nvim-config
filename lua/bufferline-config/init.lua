@@ -1,5 +1,3 @@
-local colors = require("catppuccin.palettes").get_palette() -- g:catppuccin_flavour's palette
-
 require("bufferline").setup({
 	options = {
 		diagnostics = "nvim_lsp",
@@ -15,7 +13,8 @@ require("bufferline").setup({
 			return s
 		end,
 	},
-	highlights = {},
+
+	highlights = require("catppuccin.groups.integrations.bufferline").get(),
 })
 
 vim.api.nvim_set_keymap("n", "<A-1>", "<Cmd>BufferLineGoToBuffer 1<CR>", { noremap = true })

@@ -31,5 +31,3 @@ require("lualine").setup({
 	tabline = {},
 	extensions = {},
 })
-
-vim.cmd([[autocmd VimEnter * highlight clear StatusLine .]]) -- Transparent statusline

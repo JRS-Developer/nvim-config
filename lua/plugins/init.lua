@@ -21,14 +21,6 @@ return packer.startup({
 			"lewis6991/impatient.nvim", -- Speed up startup! :D
 		})
 
-		use({
-			"glepnir/dashboard-nvim", -- Dashboard
-			config = "require('dashboard-config')",
-		})
-
-		-- Editor Config
-		use("editorconfig/editorconfig-vim")
-
 		-- Themes And Colors
 		use({
 			"catppuccin/nvim",
@@ -188,6 +180,7 @@ return packer.startup({
 			"akinsho/bufferline.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
 			config = "require('bufferline-config')",
+			after = "catppuccin",
 		})
 
 		-- Comments

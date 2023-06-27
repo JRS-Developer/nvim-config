@@ -1,7 +1,11 @@
 local keymap = vim.keymap.set
 local saga = require("lspsaga")
 
-saga.setup({})
+saga.setup({
+	ui = {
+		kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
+	},
+})
 
 -- Lsp finder find the symbol definition implement reference
 -- when you use action in finder like open vsplit then you can

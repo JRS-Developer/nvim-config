@@ -1,5 +1,5 @@
 -- Left side
--- vim.o.relativenumber = true -- It is lagging the scroll :(
+vim.o.relativenumber = true -- It is lagging the scroll :(
 vim.o.number = true
 vim.o.lazyredraw = true -- Speed scroll
 vim.o.signcolumn = "yes" -- Space for lsp icons
@@ -32,6 +32,8 @@ vim.opt.mouse = "a" -- Allow to use the mouse
 
 vim.o.foldmethod = "manual"
 vim.o.foldcolumn = "auto"
+
+vim.o.spell = true
 
 vim.opt.timeoutlen = 100 -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.opt.undofile = true -- enable undo file
