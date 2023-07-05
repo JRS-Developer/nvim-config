@@ -168,7 +168,10 @@ lazy.setup({
 		config = function()
 			require("luaSnip-config")
 		end,
+		build = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets" },
 	},
+
 	"rafamadriz/friendly-snippets",
 	"saadparwaiz1/cmp_luasnip",
 
@@ -234,7 +237,7 @@ lazy.setup({
 	},
 
 	{
-		"TimUntersberger/neogit",
+		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
