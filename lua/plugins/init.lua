@@ -31,7 +31,7 @@ lazy.setup({
 	},
 
 	{
-		"norcalli/nvim-colorizer.lua",
+		"NvChad/nvim-colorizer.lua",
 		config = function()
 			require("colorizer-config")
 		end,
@@ -204,7 +204,12 @@ lazy.setup({
 	-- Comments
 	{
 		"numToStr/Comment.nvim",
-		keys = { "gc", "gb" },
+		keys = { -- example keymaps for lazy loading this plugin.
+			{ "gcc", mode = "n", desc = "Toggles the current line using linewise comment" },
+			{ "gbc", mode = "n", desc = "Toggles the current line using blockwise comment" },
+			{ "gc", mode = "v", desc = "Toggles the region using linewise comment" },
+			{ "gb", mode = "v", desc = "Toggles the region using blockwise comment" },
+		},
 		config = function()
 			require("Comment-config")
 		end,
