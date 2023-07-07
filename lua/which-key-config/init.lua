@@ -113,7 +113,7 @@ local mappings = {
 		q = { "<cmd>Trouble quickfix<cr>", "Trouble Quickfix" },
 		t = { "<cmd>Trouble telescope<cr>", "Trouble Telescope" },
 	},
-	g = { "<cmd>Neogit kind=vsplit <cr>", "Neogit" },
+	g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "LazyGit" },
 	s = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search Replace Current Word" },
 	["S"] = { "<cmd>lua require('spectre').open()<cr>", "Search And Replace" },
 	m = {
