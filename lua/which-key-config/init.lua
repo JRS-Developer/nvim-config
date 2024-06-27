@@ -159,6 +159,22 @@ local mappings = {
 		l = { "<cmd>BufferLineCloseLeft<cr>", "Close Left" },
 		r = { "<cmd>BufferLineCloseRight<cr>", "Close Right" },
 	},
+	cc = {
+		name = "Copilot Chat",
+		q = {
+			function()
+				local input = vim.fn.input("Quick Chat: ")
+				if input ~= "" then
+					require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+				end
+			end,
+			"Quick Chat",
+		},
+		o = {
+			"<cmd>CopilotChatOpen<cr>",
+			"Open Chat",
+		},
+	},
 }
 
 which_key.register(mappings, opts)

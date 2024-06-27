@@ -19,16 +19,21 @@ local sources = {
 	builtins.diagnostics.phpmd.with({
 		extra_args = { "phpmd.xml" },
 	}), -- Php Mess Detector
-	builtins.diagnostics.pylama, -- Python linter, useful?
+	-- builtins.diagnostics.pylama, -- Python linter, useful?
 	builtins.diagnostics.actionlint,
-	builtins.diagnostics.cpplint,
+	-- builtins.diagnostics.cpplint,
 	builtins.diagnostics.hadolint,
 
 	-- Code Actions
 	builtins.code_actions.gitsigns,
-	require("typescript.extensions.null-ls.code-actions"),
+	-- require("typescript.extensions.null-ls.code-actions"),
 }
 
 null_ls.setup({
 	sources = sources,
+})
+
+require("mason-null-ls").setup({
+	ensure_installed = nil,
+	automatic_installation = true,
 })

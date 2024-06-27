@@ -1,11 +1,6 @@
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "all",
 
-	context_commentstring = {
-		enable = true,
-		enable_autocmd = false,
-	},
-
 	highlight = {
 		-- `false` will disable the whole extension
 		enable = true,
@@ -21,13 +16,13 @@ require("nvim-treesitter.configs").setup({
 	},
 	autotag = {
 		enable = true,
-	},
-	rainbow = {
-		enable = true,
-		-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-		extended_mode = false, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-		max_file_lines = nil, -- Do not enable for files with more than n lines, int
-		-- colors = {}, -- table of hex strings
-		-- termcolors = {} -- table of colour name strings
+		enable_close_on_slash = false, -- https://github.com/windwp/nvim-ts-autotag/issues/125
 	},
 })
+
+require("ts_context_commentstring").setup({
+	enable_autocmd = false,
+})
+
+-- Set vim.g.skip_ts_context_commentstring_module = true somewhere in your configuration to skip backwards compatibility routines and speed up loading.
+vim.g.skip_ts_context_commentstring_module = true

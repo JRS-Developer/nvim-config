@@ -5,7 +5,7 @@ require("catppuccin").setup({
 		shade = "dark",
 		percentage = 0.15,
 	},
-	flavour = "macchiato", -- latte, frappe, macchiato, mocha
+	flavour = "mocha", -- latte, frappe, macchiato, mocha
 	transparent_background = false,
 	term_colors = true,
 	compile = {
@@ -43,10 +43,10 @@ require("catppuccin").setup({
 			enabled = false,
 			enable_ui = false,
 		},
-		ts_rainbow = true,
+		rainbow_delimiters = true,
 		indent_blankline = {
-			enabled = false,
-			colored_indent_levels = false,
+			enabled = true,
+			colored_indent_levels = true,
 		},
 		native_lsp = {
 			enabled = true,

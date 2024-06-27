@@ -14,10 +14,6 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	-- Vim Illuminate
-	require("illuminate").on_attach(client)
-	vim.g.Illuminate_ftblacklist = { "NvimTree" }
-
 	vim.diagnostic.config({
 		virtual_text = {
 			prefix = "●", -- Could be '●', '▎', 'x'
@@ -60,7 +56,7 @@ local lspkind = require("lspkind")
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 cmp.setup({
 	snippet = {
@@ -223,7 +219,8 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Install the servers that are not installed yet.
 local servers = {
-	"tsserver",
+	-- "tsserver",
+	"vtsls",
 	"vimls",
 	"cssls",
 	"html",
@@ -241,17 +238,6 @@ local servers = {
 }
 
 require("mason").setup()
-require("mason-tool-installer").setup({
-	ensure_installed = {
-
-		-- you can pin a tool to a particular version
-		-- { 'golangci-lint', version = '1.47.0' },
-		--
-		-- -- you can turn off/on auto_update per tool
-		-- { 'bash-language-server', auto_update = true },
-		"prettierd",
-	},
-})
 local masonLsp = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
 
@@ -305,23 +291,12 @@ for _, name in pairs(masonLsp.get_installed_servers()) do
 	opts.capabilities = capabilities
 	opts.root_dir = vim.loop.cwd
 
-	-- https://github.com/jose-elias-alvarez/typescript.nvim -- Avoid tsserver
-	-- This setup() function will take the provided server configuration and decorate it with the necessary properties
-	-- before passing it onwards to lspconfig.
-	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-	if name ~= "tsserver" then
-		lspconfig[name].setup(opts)
-	end
+	lspconfig[name].setup(opts)
 end
 
 -- Config for tsserver
-require("typescript").setup({
-	disable_commands = false, -- prevent the plugin from creating Vim commands
-	debug = false, -- enable debug logging for commands
-	go_to_source_definition = {
-		fallback = true, -- fall back to standard LSP definition on failure
-	},
-	server = { -- pass options to lspconfig's setup method
-		on_attach = on_attach,
-	},
-})
+-- require("typescript").setup({
+-- 	server = { -- pass options to lspconfig's setup method
+-- 		on_attach = on_attach,
+-- 	},
+-- })

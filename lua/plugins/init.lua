@@ -24,7 +24,7 @@ lazy.setup({
 	},
 
 	{
-		"kyazdani42/nvim-web-devicons",
+		"nvim-tree/nvim-web-devicons",
 		config = function()
 			require("devicons-config")
 		end,
@@ -59,7 +59,7 @@ lazy.setup({
 			},
 			{
 				"S",
-				mode = { "n", "o", "x" },
+				mode = { "n", "o" },
 				function()
 					require("flash").treesitter()
 				end,
@@ -95,6 +95,7 @@ lazy.setup({
 	{
 
 		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
 		config = function()
 			require("indent-blankline-config")
 		end,
@@ -102,7 +103,7 @@ lazy.setup({
 	{
 		"kyazdani42/nvim-tree.lua",
 		dependencies = {
-			"kyazdani42/nvim-web-devicons", -- optional, for file icon
+			"nvim-tree/nvim-web-devicons", -- optional, for file icon
 		},
 		config = function()
 			require("nvim-tree-config")
@@ -126,11 +127,17 @@ lazy.setup({
 		dependencies = {
 			"windwp/nvim-ts-autotag",
 			"JoosepAlviste/nvim-ts-context-commentstring",
-			"p00f/nvim-ts-rainbow",
 		},
 		config = function()
 			require("treesitter-config")
 		end,
+	},
+	{
+		"barrett-ruth/import-cost.nvim",
+		build = "sh install.sh yarn",
+		-- if on windows
+		-- build = 'pwsh install.ps1 yarn',
+		config = true,
 	},
 
 	-- LSP
@@ -142,17 +149,20 @@ lazy.setup({
 		dependencies = {
 			"neovim/nvim-lspconfig",
 			"williamboman/mason-lspconfig.nvim",
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			"jose-elias-alvarez/typescript.nvim",
+			-- "jose-elias-alvarez/typescript.nvim",
 			"b0o/SchemaStore.nvim", -- Json schemas
 		},
 	},
 	{
-		"glepnir/lspsaga.nvim",
+		"nvimdev/lspsaga.nvim",
 		config = function()
 			require("lsp-saga-config")
 		end,
-		event = "BufRead",
+		event = "LspAttach",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter", -- optional
+			"nvim-tree/nvim-web-devicons", -- optionalpl
+		},
 	},
 	{
 		"ray-x/lsp_signature.nvim",
@@ -165,16 +175,27 @@ lazy.setup({
 	},
 	{
 		"folke/trouble.nvim",
-		dependencies = "kyazdani42/nvim-web-devicons",
+		dependencies = "nvim-tree/nvim-web-devicons",
 		config = function()
 			require("trouble-config")
 		end,
 		cmd = "Trouble",
 	},
+	{
+		"dmmulroy/ts-error-translator.nvim",
+		config = function()
+			require("ts-error-translator").setup()
+		end,
+	},
 
 	-- Formatting, Diagnostics and Code Analysis, The best of both worlds!
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"jay-babu/mason-null-ls.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"nvimtools/none-ls.nvim",
+		},
 		config = function()
 			require("null-ls-config")
 		end,
@@ -214,6 +235,19 @@ lazy.setup({
 			require("copilot_cmp").setup()
 		end,
 	},
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "canary",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+		},
+		opts = {
+			debug = true, -- Enable debugging
+			-- See Configuration section for rest
+		},
+		-- See Commands section for default commands if you want to lazy load on them
+	},
 
 	"onsails/lspkind-nvim",
 
@@ -232,6 +266,7 @@ lazy.setup({
 
 	{
 		"windwp/nvim-autopairs",
+		event = "InsertEnter",
 		config = function()
 			require("nvim-autopairs").setup({
 				check_ts = true,
@@ -250,7 +285,7 @@ lazy.setup({
 	-- Tabs
 	{
 		"akinsho/bufferline.nvim",
-		dependencies = "kyazdani42/nvim-web-devicons",
+		dependencies = "nvim-tree/nvim-web-devicons",
 		config = function()
 			require("bufferline-config")
 		end,
@@ -296,17 +331,6 @@ lazy.setup({
 		end,
 	},
 
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		config = function()
-			require("neogit-config")
-		end,
-		cmd = "Neogit",
-	},
-
 	{ "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
 
 	{
@@ -328,7 +352,12 @@ lazy.setup({
 	},
 
 	-- Cursor
-	"RRethy/vim-illuminate",
+	{
+		"RRethy/vim-illuminate",
+		config = function()
+			require("illuminate").configure({})
+		end,
+	},
 
 	-- Search And Replace
 	"windwp/nvim-spectre",
@@ -343,7 +372,7 @@ lazy.setup({
 
 	{
 		"rcarriga/nvim-dap-ui",
-		dependencies = { "mfussenegger/nvim-dap" },
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
 		config = function()
 			require("dapui").setup()
 		end,
@@ -374,4 +403,6 @@ lazy.setup({
 			require("toggleterm-config")
 		end,
 	},
+
+	{ "wakatime/vim-wakatime", lazy = false },
 })
