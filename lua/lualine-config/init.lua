@@ -7,7 +7,6 @@ require("lualine").setup({
 		section_separators = { left = "", right = "" },
 		disabled_filetypes = {
 			"dashboard",
-			"NvimTree",
 		},
 		always_divide_middle = true,
 		globalstatus = true,
@@ -29,5 +28,5 @@ require("lualine").setup({
 		lualine_z = {},
 	},
 	tabline = {},
-	extensions = {},
+	extensions = { "nvim-tree", "trouble", "mason", "toggleterm", "nvim-dap-ui" },
 })

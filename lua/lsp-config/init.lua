@@ -1,3 +1,4 @@
+local M = {}
 -- NULL LS FUNCTIONS
 local lsp_formatting = function(bufnr)
 	vim.lsp.buf.format({
@@ -13,14 +14,15 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+function M.on_attach(client, bufnr)
 	vim.diagnostic.config({
 		virtual_text = {
 			prefix = "●", -- Could be '●', '▎', 'x'
 		},
 		signs = true,
 		underline = true,
-		update_in_insert = true,
+		-- update_in_insert = true, -- HIGH CPU USAGE
+		update_in_insert = false,
 	})
 
 	local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -30,16 +32,14 @@ local on_attach = function(client, bufnr)
 	end
 
 	-- NULL LS
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				lsp_formatting(bufnr)
-			end,
-		})
-	end
+	vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = augroup,
+		buffer = bufnr,
+		callback = function()
+			lsp_formatting(bufnr)
+		end,
+	})
 end
 
 local has_words_before = function()
@@ -54,9 +54,8 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 -- If you want insert `(` after select function or method item
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 cmp.setup({
 	snippet = {
@@ -215,7 +214,7 @@ cmp.setup.cmdline(":", {
 	}),
 })
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+M.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Install the servers that are not installed yet.
 local servers = {
@@ -287,12 +286,19 @@ for _, name in pairs(masonLsp.get_installed_servers()) do
 		}
 	end
 
-	opts.on_attach = on_attach
-	opts.capabilities = capabilities
+	opts.on_attach = M.on_attach
+	opts.capabilities = M.capabilities
 	opts.root_dir = vim.loop.cwd
 
 	lspconfig[name].setup(opts)
 end
+
+require("flutter-tools").setup({
+	lsp = {
+		on_attach = M.on_attach,
+		capabilities = M.capabilities,
+	},
+})
 
 -- Config for tsserver
 -- require("typescript").setup({
@@ -300,3 +306,5 @@ end
 -- 		on_attach = on_attach,
 -- 	},
 -- })
+--
+return M

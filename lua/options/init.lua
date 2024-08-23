@@ -1,7 +1,7 @@
 -- Left side
 vim.o.relativenumber = true -- It is lagging the scroll :(
 vim.o.number = true
-vim.o.lazyredraw = true -- Speed scroll
+-- vim.o.lazyredraw = true -- Speed scroll
 vim.o.signcolumn = "yes" -- Space for lsp icons
 
 -- Ident
@@ -35,7 +35,6 @@ vim.o.foldcolumn = "auto"
 
 vim.o.spell = true
 
-vim.opt.timeoutlen = 100 -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.opt.undofile = true -- enable undo file
 vim.opt.wrap = false -- disable line wrapping
 vim.opt.showmode = false -- show mode

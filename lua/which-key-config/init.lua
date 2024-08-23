@@ -11,72 +11,6 @@ local continue = function()
 	require("dap").continue()
 end
 
-local setup = {
-	plugins = {
-		marks = true, -- shows a list of your marks on ' and `
-		registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-		spelling = {
-			enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-			suggestions = 20, -- how many suggestions should be shown in the list?
-		},
-		-- the presets plugin, adds help for a bunch of default keybindings in Neovim
-		-- No actual key bindings are created
-		presets = {
-			operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-			motions = false, -- adds help for motions
-			text_objects = false, -- help for text objects triggered after entering an operator
-			windows = false, -- default bindings on <c-w>
-			nav = true, -- misc bindings to work with windows
-			z = true, -- bindings for folds, spelling and others prefixed with z
-			g = true, -- bindings for prefixed with g
-		},
-	},
-	-- add operators that will trigger motion and text object completion
-	-- to enable all native operators, set the preset / operators plugin above
-	-- operators = { gc = "Comments" },
-	key_labels = {
-		-- override the label used to display some keys. It doesn't effect WK in any other way.
-		-- For example:
-		-- ["<space>"] = "SPC",
-		-- ["<cr>"] = "RET",
-		-- ["<tab>"] = "TAB",
-	},
-	icons = {
-		breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-		separator = "➜", -- symbol used between a key and it's label
-		group = "+", -- symbol prepended to a group
-	},
-	popup_mappings = {
-		scroll_down = "<c-d>", -- binding to scroll down inside the popup
-		scroll_up = "<c-u>", -- binding to scroll up inside the popup
-	},
-	window = {
-		border = "rounded", -- none, single, double, shadow
-		position = "bottom", -- bottom, top
-		margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-		padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-		winblend = 0,
-	},
-	layout = {
-		height = { min = 4, max = 25 }, -- min and max height of the columns
-		width = { min = 20, max = 50 }, -- min and max width of the columns
-		spacing = 3, -- spacing between columns
-		align = "left", -- align columns left, center or right
-	},
-	ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-	hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-	show_help = true, -- show help message on the command line when the popup is visible
-	triggers = "auto", -- automatically setup triggers
-	-- triggers = {"<leader>"} -- or specify a list manually
-	triggers_blacklist = {
-		-- list of mode / prefixes that should never be hooked by WhichKey
-		-- this is mostly relevant for key maps that start with a native binding
-		-- most people should not need to change this
-		i = { "j", "k" },
-		v = { "j", "k" },
-	},
-}
-
 local opts = {
 	mode = "n", -- NORMAL mode
 	prefix = "<leader>", -- key prefix
@@ -87,95 +21,107 @@ local opts = {
 }
 
 local mappings = {
-	p = {
-		name = "Lazy",
-		s = { "<cmd>Lazy sync<cr>", "Sync" },
-		S = { "<cmd>Lazy home<cr>", "Status" },
-		u = { "<cmd>Lazy update<cr>", "Update" },
+	{
+		"<leader>S",
+		"<cmd>lua require('spectre').open()<cr>",
+		desc = "Search And Replace",
+		nowait = true,
+		remap = false,
 	},
-	f = {
-		name = "File",
-		f = { "<cmd>Telescope find_files<cr>", "Find File" },
-		g = { "<cmd>Telescope live_grep<cr>", "Find Word" },
-		b = { "<cmd>Telescope buffers<cr>", "Find Buffer" },
-		h = { "<cmd>Telescope help_tags<cr>", "Find Tag" },
+	{ "<leader>c", group = "BufferLine Close", nowait = true, remap = false },
+	{ "<leader>cc", group = "Copilot Chat", nowait = true, remap = false },
+	{ "<leader>cco", "<cmd>CopilotChatOpen<cr>", desc = "Open Chat", nowait = true, remap = false },
+	{
+		"<leader>ccq",
+		function()
+			local input = vim.fn.input("Quick Chat: ")
+			if input ~= "" then
+				require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+			end
+		end,
+		desc = "Quick Chat",
+		nowait = true,
+		remap = false,
 	},
-	t = {
-		"<cmd>ToggleTerm<cr>",
-		"ToggleTerm",
+	{ "<leader>cl", "<cmd>BufferLineCloseLeft<cr>", desc = "Close Left", nowait = true, remap = false },
+	{ "<leader>cr", "<cmd>BufferLineCloseRight<cr>", desc = "Close Right", nowait = true, remap = false },
+	{ "<leader>d", group = "DAP", nowait = true, remap = false },
+	{ "<leader>db", group = "Breakpoint", nowait = true, remap = false },
+	{
+		"<leader>dbc",
+		':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>',
+		desc = "Set conditional",
+		nowait = true,
+		remap = false,
 	},
-	x = {
-		name = "Trouble",
-		x = { "<cmd>Trouble<cr>", "Trouble" },
-		w = { "<cmd>Trouble workspace_diagnostics<cr>", "Trouble Workspace Diagnostics" },
-		d = { "<cmd>Trouble document_diagnostics<cr>", "Trouble Document Diagnostics" },
-		l = { "<cmd>Trouble locklist<cr>", "Trouble Locklist" },
-		q = { "<cmd>Trouble quickfix<cr>", "Trouble Quickfix" },
-		t = { "<cmd>Trouble telescope<cr>", "Trouble Telescope" },
+	{
+		"<leader>dbl",
+		':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',
+		desc = "With Log Point Message",
+		nowait = true,
+		remap = false,
 	},
-	g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "LazyGit" },
-	s = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search Replace Current Word" },
-	["S"] = { "<cmd>lua require('spectre').open()<cr>", "Search And Replace" },
-	m = {
-		name = "Markdown Preview",
-		o = { "<cmd>MarkdownPreview<cr>", "Open" },
-		s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
-		t = { "<cmd>MarkdownPreview<cr>", "Toggle" },
+	{ "<leader>dbt", ':lua require("dap").toggle_breakpoint()<CR>', desc = "Toggle", nowait = true, remap = false },
+	{ "<leader>dc", continue, desc = "Continue", nowait = true, remap = false },
+	{ "<leader>dd", ':lua require("dap").repl.open()<CR>', desc = "Open Debug Console", nowait = true, remap = false },
+	{
+		"<leader>dl",
+		':lua require("dap").run_last()<CR>',
+		desc = "Run Last Debugging Config",
+		nowait = true,
+		remap = false,
 	},
-	n = {
-		n = { "<cmd>NvimTreeToggle <cr>", "NvimTreeToggle" },
-		r = { "<cmd>NvimTreeRefresh <cr>", "NvimTreeRefresh" },
+	{ "<leader>ds", group = "Step", nowait = true, remap = false },
+	{ "<leader>dsO", ':lua require("dap").step_into()<CR>', desc = "Step Into", nowait = true, remap = false },
+	{ "<leader>dsb", ':lua require("dap").step_back()<CR>', desc = "Step Back", nowait = true, remap = false },
+	{ "<leader>dsc", ':lua require("dap").run_to_cursor()<CR>', desc = "Run To Cursor", nowait = true, remap = false },
+	{ "<leader>dsi", ':lua require("dap").step_out()<CR>', desc = "Step Out", nowait = true, remap = false },
+	{ "<leader>dso", ':lua require("dap").step_over()<CR>', desc = "Step Over", nowait = true, remap = false },
+	{ "<leader>dt", ':lua require("dap").terminate()<CR>', desc = "Terminate", nowait = true, remap = false },
+	{ "<leader>du", ':lua require("dapui").toggle()<CR>', desc = "Toggle UI", nowait = true, remap = false },
+	{ "<leader>f", group = "File", nowait = true, remap = false },
+	{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find Buffer", nowait = true, remap = false },
+	{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", nowait = true, remap = false },
+	{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find Word", nowait = true, remap = false },
+	{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find Tag", nowait = true, remap = false },
+	{ "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc = "LazyGit", nowait = true, remap = false },
+	{ "<leader>m", group = "Markdown Preview", nowait = true, remap = false },
+	{ "<leader>mo", "<cmd>MarkdownPreview<cr>", desc = "Open", nowait = true, remap = false },
+	{ "<leader>ms", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop", nowait = true, remap = false },
+	{ "<leader>mt", "<cmd>MarkdownPreview<cr>", desc = "Toggle", nowait = true, remap = false },
+	{ "<leader>nn", "<cmd>NvimTreeToggle <cr>", desc = "NvimTreeToggle", nowait = true, remap = false },
+	{ "<leader>nr", "<cmd>NvimTreeRefresh <cr>", desc = "NvimTreeRefresh", nowait = true, remap = false },
+	{ "<leader>p", group = "Lazy", nowait = true, remap = false },
+	{ "<leader>pS", "<cmd>Lazy home<cr>", desc = "Status", nowait = true, remap = false },
+	{ "<leader>ps", "<cmd>Lazy sync<cr>", desc = "Sync", nowait = true, remap = false },
+	{ "<leader>pu", "<cmd>Lazy update<cr>", desc = "Update", nowait = true, remap = false },
+	{
+		"<leader>s",
+		"<cmd>lua require('spectre').open_visual({select_word=true})<cr>",
+		desc = "Search Replace Current Word",
+		nowait = true,
+		remap = false,
 	},
-	d = {
-		name = "DAP",
-		c = { continue, "Continue" },
-		t = { ':lua require("dap").terminate()<CR>', "Terminate" },
-		l = { ':lua require("dap").run_last()<CR>', "Run Last Debugging Config" },
-		d = { ':lua require("dap").repl.open()<CR>', "Open Debug Console" },
-		b = {
-			name = "Breakpoint",
-			t = { ':lua require("dap").toggle_breakpoint()<CR>', "Toggle" },
-			c = {
-				':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>',
-				"Set conditional",
-			},
-			l = {
-				':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',
-				"With Log Point Message",
-			},
-		},
-		s = {
-			name = "Step",
-			o = { ':lua require("dap").step_over()<CR>', "Step Over" },
-			O = { ':lua require("dap").step_into()<CR>', "Step Into" },
-			i = { ':lua require("dap").step_out()<CR>', "Step Out" },
-			b = { ':lua require("dap").step_back()<CR>', "Step Back" },
-			c = { ':lua require("dap").run_to_cursor()<CR>', "Run To Cursor" },
-		},
-		u = { ':lua require("dapui").toggle()<CR>', "Toggle UI" },
+	{ "<leader>t", "<cmd>ToggleTerm<cr>", desc = "ToggleTerm", nowait = true, remap = false },
+	{ "<leader>x", group = "Trouble", nowait = true, remap = false },
+	{
+		"<leader>xd",
+		"<cmd>Trouble document_diagnostics<cr>",
+		desc = "Trouble Document Diagnostics",
+		nowait = true,
+		remap = false,
 	},
-	c = {
-		name = "BufferLine Close",
-		l = { "<cmd>BufferLineCloseLeft<cr>", "Close Left" },
-		r = { "<cmd>BufferLineCloseRight<cr>", "Close Right" },
+	{ "<leader>xl", "<cmd>Trouble locklist<cr>", desc = "Trouble Locklist", nowait = true, remap = false },
+	{ "<leader>xq", "<cmd>Trouble quickfix<cr>", desc = "Trouble Quickfix", nowait = true, remap = false },
+	{ "<leader>xt", "<cmd>Trouble telescope<cr>", desc = "Trouble Telescope", nowait = true, remap = false },
+	{
+		"<leader>xw",
+		"<cmd>Trouble workspace_diagnostics<cr>",
+		desc = "Trouble Workspace Diagnostics",
+		nowait = true,
+		remap = false,
 	},
-	cc = {
-		name = "Copilot Chat",
-		q = {
-			function()
-				local input = vim.fn.input("Quick Chat: ")
-				if input ~= "" then
-					require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-				end
-			end,
-			"Quick Chat",
-		},
-		o = {
-			"<cmd>CopilotChatOpen<cr>",
-			"Open Chat",
-		},
-	},
+	{ "<leader>xx", "<cmd>Trouble<cr>", desc = "Trouble", nowait = true, remap = false },
 }
 
-which_key.register(mappings, opts)
-which_key.setup(setup)
+which_key.add(mappings, opts)

@@ -2,7 +2,6 @@ require("bufferline").setup({
 	options = {
 		diagnostics = "nvim_lsp",
 		close_icon = "",
-		diagnostics_update_in_insert = true,
 		offsets = { { filetype = "NvimTree" } },
 		diagnostics_indicator = function(count, level, diagnostics_dict, context)
 			local s = " "

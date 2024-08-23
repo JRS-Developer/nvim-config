@@ -24,6 +24,13 @@ lazy.setup({
 	},
 
 	{
+		"HiPhish/rainbow-delimiters.nvim",
+		config = function()
+			require("rainbow-delimiters.setup").setup()
+		end,
+	},
+
+	{
 		"nvim-tree/nvim-web-devicons",
 		config = function()
 			require("devicons-config")
@@ -91,6 +98,76 @@ lazy.setup({
 			},
 		},
 	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+					},
+					signature = {
+						enabled = false,
+					},
+				},
+				-- you can enable a preset for easier configuration
+				presets = {
+					bottom_search = false, -- use a classic bottom cmdline for search
+					command_palette = false, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+				views = {
+					cmdline_popup = {
+						border = {
+							style = "none",
+							padding = { 2, 3 },
+						},
+						filter_options = {},
+						win_options = {
+							winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+						},
+					},
+				},
+				routes = {
+					{
+						filter = {
+							event = "lsp",
+							kind = "progress",
+							cond = function(message)
+								local client = vim.tbl_get(message.opts, "progress", "client")
+								return client == "null-ls"
+							end,
+						},
+						opts = { skip = true },
+					},
+				},
+			})
+		end,
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+	},
+	{
+		"echasnovski/mini.nvim",
+		version = false,
+		config = function()
+			require("mini.ai").setup()
+		end,
+	},
 
 	{
 
@@ -133,6 +210,14 @@ lazy.setup({
 		end,
 	},
 	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		after = "nvim-treesitter",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+
+	{
 		"barrett-ruth/import-cost.nvim",
 		build = "sh install.sh yarn",
 		-- if on windows
@@ -174,6 +259,14 @@ lazy.setup({
 		dependencies = "mason-lspconfig.nvim",
 	},
 	{
+		"akinsho/flutter-tools.nvim",
+		lazy = false,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
+		},
+	},
+	{
 		"folke/trouble.nvim",
 		dependencies = "nvim-tree/nvim-web-devicons",
 		config = function()
@@ -211,7 +304,11 @@ lazy.setup({
 		ft = { "lua", "vim", "nvim" },
 	},
 	{ "David-Kunz/cmp-npm", dependencies = { "nvim-lua/plenary.nvim" } },
-	"hrsh7th/nvim-cmp",
+	{
+		"hrsh7th/nvim-cmp",
+		branch = "main",
+		commit = "7e348da6e5085ac447144a2ef4b637220ba27209",
+	},
 
 	-- Copilot
 	{
@@ -278,7 +375,19 @@ lazy.setup({
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		config = function()
 			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
+				keymaps = {
+					insert = "<C-g>s",
+					insert_line = "<C-g>S",
+					normal = "ys",
+					normal_cur = "yss",
+					normal_line = "yS",
+					normal_cur_line = "ySS",
+					visual = "S",
+					visual_line = "gS",
+					delete = "ds",
+					change = "cs",
+					change_line = "cS",
+				},
 			})
 		end,
 	},
@@ -286,6 +395,7 @@ lazy.setup({
 	{
 		"akinsho/bufferline.nvim",
 		dependencies = "nvim-tree/nvim-web-devicons",
+		after = "catppuccin",
 		config = function()
 			require("bufferline-config")
 		end,
@@ -294,12 +404,12 @@ lazy.setup({
 	-- Comments
 	{
 		"numToStr/Comment.nvim",
-		keys = { -- example keymaps for lazy loading this plugin.
-			{ "gcc", mode = "n", desc = "Toggles the current line using linewise comment" },
-			{ "gbc", mode = "n", desc = "Toggles the current line using blockwise comment" },
-			{ "gc", mode = "v", desc = "Toggles the region using linewise comment" },
-			{ "gb", mode = "v", desc = "Toggles the region using blockwise comment" },
-		},
+		-- keys = { -- example keymaps for lazy loading this plugin.
+		-- 	{ "gcc", mode = "n", desc = "Toggles the current line using linewise comment" },
+		-- 	{ "gbc", mode = "n", desc = "Toggles the current line using blockwise comment" },
+		-- 	{ "gc", mode = "v", desc = "Toggles the region using linewise comment" },
+		-- 	{ "gb", mode = "v", desc = "Toggles the region using blockwise comment" },
+		-- },
 		config = function()
 			require("Comment-config")
 		end,
@@ -392,7 +502,6 @@ lazy.setup({
 		config = function()
 			require("which-key-config")
 		end,
-		keys = { "<leader>" },
 	},
 
 	-- Terminal
@@ -402,6 +511,23 @@ lazy.setup({
 		config = function()
 			require("toggleterm-config")
 		end,
+	},
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
 	},
 
 	{ "wakatime/vim-wakatime", lazy = false },
