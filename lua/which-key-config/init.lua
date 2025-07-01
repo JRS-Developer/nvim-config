@@ -29,20 +29,10 @@ local mappings = {
 		remap = false,
 	},
 	{ "<leader>c", group = "BufferLine Close", nowait = true, remap = false },
-	{ "<leader>cc", group = "Copilot Chat", nowait = true, remap = false },
-	{ "<leader>cco", "<cmd>CopilotChatOpen<cr>", desc = "Open Chat", nowait = true, remap = false },
-	{
-		"<leader>ccq",
-		function()
-			local input = vim.fn.input("Quick Chat: ")
-			if input ~= "" then
-				require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-			end
-		end,
-		desc = "Quick Chat",
-		nowait = true,
-		remap = false,
-	},
+	{ "<leader>cA", group = "Code AI", nowait = true, remap = false },
+	{ "<leader>cA", "<cmd>CodeCompanion<cr>", desc = "Quick Chat", nowait = false, remap = false, mode = { "v" } },
+	{ "<leader>cAo", "<cmd>CodeCompanionChat Toggle<cr>", desc = "Toggle Chat", nowait = true, remap = false },
+	{ "<leader>cAn", "<cmd>CodeCompanionChat<cr>", desc = "New Chat", nowait = true, remap = false },
 	{ "<leader>cl", "<cmd>BufferLineCloseLeft<cr>", desc = "Close Left", nowait = true, remap = false },
 	{ "<leader>cr", "<cmd>BufferLineCloseRight<cr>", desc = "Close Right", nowait = true, remap = false },
 	{ "<leader>d", group = "DAP", nowait = true, remap = false },
@@ -80,11 +70,16 @@ local mappings = {
 	{ "<leader>dt", ':lua require("dap").terminate()<CR>', desc = "Terminate", nowait = true, remap = false },
 	{ "<leader>du", ':lua require("dapui").toggle()<CR>', desc = "Toggle UI", nowait = true, remap = false },
 	{ "<leader>f", group = "File", nowait = true, remap = false },
-	{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find Buffer", nowait = true, remap = false },
-	{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", nowait = true, remap = false },
-	{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find Word", nowait = true, remap = false },
-	{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find Tag", nowait = true, remap = false },
-	{ "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc = "LazyGit", nowait = true, remap = false },
+	{ "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find Buffer", nowait = true, remap = false },
+	{
+		"<leader>ff",
+		"<cmd>FzfLua files<cr>",
+		desc = "Find File",
+		nowait = true,
+		remap = false,
+	},
+	{ "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Find Word", nowait = true, remap = false },
+	{ "<leader>fh", "<cmd>FzfLua help_tags<cr>", desc = "Find Tag", nowait = true, remap = false },
 	{ "<leader>m", group = "Markdown Preview", nowait = true, remap = false },
 	{ "<leader>mo", "<cmd>MarkdownPreview<cr>", desc = "Open", nowait = true, remap = false },
 	{ "<leader>ms", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop", nowait = true, remap = false },
@@ -113,7 +108,7 @@ local mappings = {
 	},
 	{ "<leader>xl", "<cmd>Trouble locklist<cr>", desc = "Trouble Locklist", nowait = true, remap = false },
 	{ "<leader>xq", "<cmd>Trouble quickfix<cr>", desc = "Trouble Quickfix", nowait = true, remap = false },
-	{ "<leader>xt", "<cmd>Trouble telescope<cr>", desc = "Trouble Telescope", nowait = true, remap = false },
+	{ "<leader>xt", "<cmd>Trouble fzf<cr>", desc = "Trouble Fzf", nowait = true, remap = false },
 	{
 		"<leader>xw",
 		"<cmd>Trouble workspace_diagnostics<cr>",
@@ -122,6 +117,10 @@ local mappings = {
 		remap = false,
 	},
 	{ "<leader>xx", "<cmd>Trouble<cr>", desc = "Trouble", nowait = true, remap = false },
+
+	{ "<leader>g", group = "Git", nowait = true, remap = false },
+	{ "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc = "LazyGit", nowait = true, remap = false },
+	{ "<leader>gb", "<cmd>Gitsigns blame<CR>", desc = "Git Blame", nowait = true, remap = false },
 }
 
 which_key.add(mappings, opts)

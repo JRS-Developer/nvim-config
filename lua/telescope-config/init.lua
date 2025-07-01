@@ -18,11 +18,16 @@ require("telescope").setup({
 			"--column",
 			"--smart-case",
 			"--trim",
-			"-Tlock",
 		},
 		mappings = {
 			i = { ["<c-t>"] = open_with_trouble },
 			n = { ["<c-t>"] = open_with_trouble },
+		},
+		file_ignore_patterns = {
+			"node_modules",
+			".git",
+			".next",
+			"dist",
 		},
 	},
 	extensions = {
@@ -34,4 +39,3 @@ require("telescope").setup({
 })
 
 require("telescope").load_extension("fzy_native")
-require("telescope").load_extension("flutter")

@@ -30,7 +30,7 @@ require("catppuccin").setup({
 		lsp_saga = true,
 		neogit = true,
 		telescope = true,
-		cmp = true,
+		cmp = false,
 		mason = true,
 		markdown = true,
 		gitsigns = true,
@@ -43,6 +43,7 @@ require("catppuccin").setup({
 			enabled = false,
 			enable_ui = false,
 		},
+		blink_cmp = true,
 		rainbow_delimiters = true,
 		indent_blankline = {
 			enabled = true,
@@ -64,7 +65,5 @@ require("catppuccin").setup({
 			},
 		},
 	},
-	color_overrides = {},
-	highlight_overrides = {},
 })
 vim.api.nvim_command("colorscheme catppuccin")

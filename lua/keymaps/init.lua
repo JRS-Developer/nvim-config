@@ -50,31 +50,76 @@ keymap("i", "jk", "<ESC>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- Plugins --
+-- VSCODE
 
--- -- NvimTree
--- keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
---
--- -- Telescope
--- keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
--- keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
--- keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
--- keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
---
--- -- Git
--- keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
---
--- -- Comment
--- keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
--- keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
---
--- -- DAP
--- keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
--- keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)
--- keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
--- keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts)
--- keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts)
--- keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
--- keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
--- keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
--- keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
+if vim.g.vscode then
+	local vscode = require("vscode")
+
+	keymap("n", "<leader>ca", function()
+		vscode.action("editor.action.quickFix")
+	end, { silent = true })
+
+	keymap("n", "<leader>ff", function()
+		vscode.action("workbench.action.quickOpen")
+	end, { silent = true })
+
+	keymap("n", "<leader>cr", function()
+		vscode.action("workbench.action.closeEditorsToTheRight")
+	end, { silent = true })
+
+	keymap("n", "<leader>cl", function()
+		vscode.action("workbench.action.closeEditorsToTheLeft")
+	end, { silent = true })
+
+	keymap("n", "<leader>n", function()
+		vscode.action("workbench.view.explorer")
+	end, { silent = true })
+
+	keymap("n", "gd", function()
+		vscode.action("editor.action.peekDefinition")
+	end, { silent = true })
+
+	keymap("n", "gr", function()
+		vscode.action("editor.action.rename")
+	end, { silent = true })
+
+	keymap("n", "gh", function()
+		vscode.action("editor.action.referenceSearch.trigger")
+	end, { silent = true })
+
+	keymap("n", "gh", function()
+		vscode.action("editor.action.referenceSearch.trigger")
+	end, { silent = true })
+
+	keymap("n", "<leader>fg", function()
+		vscode.action("workbench.action.quickTextSearch")
+	end, { silent = true })
+
+	keymap("n", "<leader>fg", function()
+		vscode.action("workbench.action.quickTextSearch")
+	end, { silent = true })
+
+	keymap("n", "<leader>ff", function()
+		vscode.action("workbench.action.quickOpen")
+	end, { silent = true })
+
+	keymap("n", "[e", function()
+		vscode.action("editor.action.marker.next")
+	end, { silent = true })
+
+	keymap("n", "]e", function()
+		vscode.action("editor.action.marker.prev")
+	end, { silent = true })
+
+	keymap("n", "<leader>gg", function()
+		vscode.action("lazygit-vscode.toggle")
+	end, { silent = true })
+
+	keymap("n", "<leader>gb", function()
+		vscode.action("gitlens.toggleFileBlame")
+	end, { silent = true })
+
+	keymap("n", "<leader>zz", function()
+		vscode.action("workbench.action.toggleZenMode")
+	end, { silent = true })
+end

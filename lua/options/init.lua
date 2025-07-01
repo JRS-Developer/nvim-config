@@ -17,6 +17,8 @@ vim.o.scrolloff = 8 -- Scroll off
 -- Searching
 vim.o.incsearch = true -- Searching
 vim.o.hlsearch = false -- Highlight search
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 -- Cursor
 vim.o.cursorline = true
@@ -33,7 +35,9 @@ vim.opt.mouse = "a" -- Allow to use the mouse
 vim.o.foldmethod = "manual"
 vim.o.foldcolumn = "auto"
 
-vim.o.spell = true
+if not vim.g.vscode then
+	vim.o.spell = true
+end
 
 vim.opt.undofile = true -- enable undo file
 vim.opt.wrap = false -- disable line wrapping
@@ -44,5 +48,16 @@ vim.opt.writebackup = false -- if a file is being edited by another program (or 
 vim.opt.swapfile = false -- creates a swapfile
 vim.opt.viewoptions = "folds,cursor"
 
+vim.opt.wildmenu = true
+vim.opt.wildmode = "full"
+
 vim.cmd("autocmd BufWinLeave *.* silent! mkview!") -- Create a view for each file
 vim.cmd("autocmd BufWinEnter *.* silent! loadview") -- Load the view for each file
+
+-- COnsider .env.* files as sh files so we can have comment and uncomment
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = ".env.*",
+	callback = function()
+		vim.bo.filetype = "sh" -- Set filetype to sh
+	end,
+})

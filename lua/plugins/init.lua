@@ -13,7 +13,9 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require("lazy")
 
-lazy.setup({
+local border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+
+local notVsCodePlugins = {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -44,60 +46,6 @@ lazy.setup({
 		end,
 	},
 
-	-- Motion
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {},
-		keys = {
-			{
-				"s",
-				mode = { "n", "o" },
-				function()
-					require("flash").jump({
-						search = { -- Match beginning of words only
-							mode = function(str)
-								return "\\<" .. str
-							end,
-						},
-					})
-				end,
-				desc = "Flash",
-			},
-			{
-				"S",
-				mode = { "n", "o" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Flash Treesitter Search",
-			},
-			{
-				"<c-s>",
-				mode = { "c" },
-				function()
-					require("flash").toggle()
-				end,
-				desc = "Toggle Flash Search",
-			},
-		},
-	},
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -189,25 +137,26 @@ lazy.setup({
 		end,
 		cmd = "Telescope",
 	},
-
-	-- Sintax
 	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		dependencies = {
-			"windwp/nvim-ts-autotag",
-			"JoosepAlviste/nvim-ts-context-commentstring",
-		},
+		"ibhagwan/fzf-lua",
+		-- optional for icon support
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		-- or if using mini.icons/mini.nvim
+		-- dependencies = { "echasnovski/mini.icons" },
+		opts = {},
 		config = function()
-			require("treesitter-config")
+			require("fzf-lua").setup({
+				"telescope",
+				files = {
+					no_ignore = true, -- respect ".gitignore"  by default
+					fd_opts = [[--color=never --hidden --type f --type l --exclude .git --exclude dist --exclude node_modules --exclude .next]],
+				},
+				grep = {
+					hidden = true,
+					rg_opts = [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden --glob '!.git/*' --glob '!node_modules/*' --glob '!dist/*' --glob '!.next/*' -e]],
+				},
+			})
 		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		after = "nvim-treesitter",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
 	},
 
 	-- {
@@ -226,6 +175,7 @@ lazy.setup({
 		end,
 		dependencies = {
 			"neovim/nvim-lspconfig",
+			"saghen/blink.cmp",
 			"williamboman/mason-lspconfig.nvim",
 			-- "jose-elias-alvarez/typescript.nvim",
 			"b0o/SchemaStore.nvim", -- Json schemas
@@ -250,14 +200,6 @@ lazy.setup({
 			})
 		end,
 		dependencies = "mason-lspconfig.nvim",
-	},
-	{
-		"akinsho/flutter-tools.nvim",
-		lazy = false,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"stevearc/dressing.nvim", -- optional for vim.ui.select
-		},
 	},
 	{
 		"folke/trouble.nvim",
@@ -287,20 +229,149 @@ lazy.setup({
 		end,
 	},
 
-	-- Completion
-	"hrsh7th/cmp-nvim-lsp",
-	"hrsh7th/cmp-buffer",
-	"hrsh7th/cmp-path",
-	"hrsh7th/cmp-cmdline",
+	-- Mini, a bunch of stuff
 	{
-		"hrsh7th/cmp-nvim-lua",
-		ft = { "lua", "vim", "nvim" },
+		"echasnovski/mini.nvim",
+		version = "*",
+		config = function()
+			-- require("mini.icons").setup()
+		end,
 	},
-	{ "David-Kunz/cmp-npm", dependencies = { "nvim-lua/plenary.nvim" } },
+
+	-- Completion
+	-- "hrsh7th/cmp-nvim-lsp",
+	-- "hrsh7th/cmp-buffer",
+	-- "hrsh7th/cmp-path",
+	-- "hrsh7th/cmp-cmdline",
+	-- {
+	-- 	"hrsh7th/cmp-nvim-lua",
+	-- 	ft = { "lua", "vim", "nvim" },
+	-- },
+	-- { "David-Kunz/cmp-npm", dependencies = { "nvim-lua/plenary.nvim" } },
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	branch = "main",
+	-- },
+	-- "saadparwaiz1/cmp_luasnip",
 	{
-		"hrsh7th/nvim-cmp",
-		branch = "main",
-		commit = "7e348da6e5085ac447144a2ef4b637220ba27209",
+		"saghen/blink.cmp",
+		-- optional: provides snippets for the snippet source
+		dependencies = { "rafamadriz/friendly-snippets" },
+
+		-- use a release tag to download pre-built binaries
+		version = "*",
+		-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+		-- build = 'cargo build --release',
+		-- If you use nix, you can build from source using latest nightly rust with:
+		-- build = 'nix run .#build-plugin',
+
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept, C-n/C-p for up/down)
+			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys for up/down)
+			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+			--
+			-- All presets have the following mappings:
+			-- C-space: Open menu or open docs if already open
+			-- C-e: Hide menu
+			-- C-k: Toggle signature help
+			--
+			-- See the full "keymap" documentation for information on defining your own keymap.
+			keymap = {
+				preset = "enter",
+				["<Tab>"] = {
+					"select_next",
+					"fallback",
+				},
+				["<S-Tab>"] = { "select_prev", "fallback" },
+			},
+
+			appearance = {
+				-- Sets the fallback highlight groups to nvim-cmp's highlight groups
+				-- Useful for when your theme doesn't support blink.cmp
+				-- Will be removed in a future release
+				use_nvim_cmp_as_default = false,
+				-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+				-- Adjusts spacing to ensure icons are aligned
+				nerd_font_variant = "normal",
+			},
+
+			-- Default list of enabled providers defined so that you can extend it
+			-- elsewhere in your config, without redefining it, due to `opts_extend`
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+			snippets = { preset = "luasnip" },
+
+			signature = { window = { border = border_chars } },
+
+			cmdline = {
+				completion = { ghost_text = { enabled = false } },
+			},
+
+			completion = {
+				-- 'prefix' will fuzzy match on the text before the cursor
+				-- 'full' will fuzzy match on the text before _and_ after the cursor
+				-- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
+				keyword = { range = "full" },
+
+				-- Don't select by default, auto insert on selection
+				list = { selection = { preselect = false, auto_insert = true } },
+
+				documentation = { window = { border = border_chars } },
+
+				menu = {
+					border = border_chars,
+					draw = {
+						components = {
+							kind_icon = {
+								ellipsis = false,
+								text = function(ctx)
+									local lspkind = require("lspkind")
+									local icon = ctx.kind_icon
+									if vim.tbl_contains({ "Path" }, ctx.source_name) then
+										local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+										if dev_icon then
+											icon = dev_icon
+										end
+									else
+										icon = lspkind.symbolic(ctx.kind, {
+											mode = "symbol",
+											present = "codicons",
+										})
+									end
+
+									return icon .. ctx.icon_gap
+								end,
+
+								-- Optionally, use the highlight groups from nvim-web-devicons
+								-- You can also add the same function for `kind.highlight` if you want to
+								-- keep the highlight groups in sync with the icons.
+								highlight = function(ctx)
+									local hl = ctx.kind_hl
+									if vim.tbl_contains({ "Path" }, ctx.source_name) then
+										local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+										if dev_icon then
+											hl = dev_hl
+										end
+									end
+									return hl
+								end,
+							},
+						},
+					},
+				},
+			},
+
+			-- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
+			-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+			--
+			-- See the fuzzy documentation for more information
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+		opts_extend = { "sources.default" },
 	},
 
 	-- Copilot
@@ -325,18 +396,161 @@ lazy.setup({
 	-- 		require("copilot_cmp").setup()
 	-- 	end,
 	-- },
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+		},
+		build = "make tiktoken", -- Only on MacOS or Linux
+
+		opts = {
+			debug = false, -- Enable debugging
+			-- See Configuration section for rest
+		},
+		-- See Commands section for default commands if you want to lazy load on them
+	},
+
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			adapters = {
+				lmstudio = function()
+					return require("codecompanion.adapters").extend("openai_compatible", {
+						name = "lmstudio",
+						env = {
+							url = "http://localhost:1234",
+							chat_url = "/v1/chat/completions",
+						},
+					})
+				end,
+				openrouter = function()
+					return require("codecompanion.adapters").extend("openai_compatible", {
+						name = "openrouter",
+						env = {
+							-- UPDATE URL (e.g., Open Router API endpoint)
+							url = "https://openrouter.ai/api",
+							-- ADD API KEY (if required)
+							api_key = "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",
+						},
+						schema = {
+							model = {
+								default = "deepseek/deepseek-chat:free",
+							},
+						},
+					})
+				end,
+			},
+			strategies = {
+				chat = {
+					adapter = "openrouter",
+				},
+				inline = {
+					adapter = "copilot",
+				},
+			},
+		},
+	},
+
 	-- {
-	-- 	"CopilotC-Nvim/CopilotChat.nvim",
-	-- 	branch = "canary",
-	-- 	dependencies = {
-	-- 		{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-	-- 		{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-	-- 	},
+	-- 	"yetone/avante.nvim",
+	-- 	event = "VeryLazy",
+	-- 	version = false, -- Never set this value to "*"! Never!
 	-- 	opts = {
-	-- 		debug = true, -- Enable debugging
-	-- 		-- See Configuration section for rest
+	-- 		-- add any opts here
+	-- 		-- for example
+	-- 		provider = "lmstudio",
+	-- 		vendors = {
+	-- 			lmstudio = {
+	-- 				__inherited_from = "openai",
+	-- 				endpoint = "http://localhost:1234/v1",
+	-- 				api_key_name = "",
+	-- 				model = "gemma-3-4b-it",
+	-- 			},
+	-- 		},
 	-- 	},
-	-- 	-- See Commands section for default commands if you want to lazy load on them
+	-- 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+	-- 	build = "make",
+	-- 	-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"stevearc/dressing.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		--- The below dependencies are optional,
+	-- 		"echasnovski/mini.pick", -- for file_selector provider mini.pick
+	-- 		"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+	-- 		"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+	-- 		"ibhagwan/fzf-lua", -- for file_selector provider fzf
+	-- 		"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+	-- 		"zbirenbaum/copilot.lua", -- for providers='copilot'
+	-- 		{
+	-- 			-- support for image pasting
+	-- 			"HakonHarnes/img-clip.nvim",
+	-- 			event = "VeryLazy",
+	-- 			opts = {
+	-- 				-- recommended settings
+	-- 				default = {
+	-- 					embed_image_as_base64 = false,
+	-- 					prompt_for_file_name = false,
+	-- 					drag_and_drop = {
+	-- 						insert_mode = true,
+	-- 					},
+	-- 					-- required for Windows users
+	-- 					use_absolute_path = true,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		-- {
+	-- 		-- 	-- Make sure to set this up properly if you have lazy=true
+	-- 		-- 	"MeanderingProgrammer/render-markdown.nvim",
+	-- 		-- 	opts = {
+	-- 		-- 		file_types = { "markdown", "Avante" },
+	-- 		-- 	},
+	-- 		-- 	ft = { "markdown", "Avante" },
+	-- 		-- },
+	-- 	},
+	-- },
+
+	-- {
+	-- 	"OXY2DEV/markview.nvim",
+	-- 	lazy = false,
+	-- 	enabled = true,
+	-- 	opts = {
+	-- 		preview = {
+	--
+	-- 			filetypes = {
+	-- 				"md",
+	-- 				"markdown",
+	-- 				"norg",
+	-- 				"rmd",
+	-- 				"org",
+	-- 				"vimwiki",
+	-- 				"typst",
+	-- 				"latex",
+	-- 				"quarto",
+	-- 				"Avante",
+	-- 				"codecompanion",
+	-- 			},
+	-- 			ignore_buftypes = {},
+	--
+	-- 			condition = function(buffer)
+	-- 				local ft, bt = vim.bo[buffer].ft, vim.bo[buffer].bt
+	--
+	-- 				if bt == "nofile" and ft == "codecompanion" then
+	-- 					return true
+	-- 				elseif bt == "nofile" then
+	-- 					return false
+	-- 				else
+	-- 					return true
+	-- 				end
+	-- 			end,
+	-- 		},
+	-- 	},
 	-- },
 
 	"onsails/lspkind-nvim",
@@ -344,6 +558,7 @@ lazy.setup({
 	-- Snippets
 	{
 		"L3MON4D3/LuaSnip",
+		version = "v2.*",
 		config = function()
 			require("luaSnip-config")
 		end,
@@ -352,7 +567,6 @@ lazy.setup({
 	},
 
 	"rafamadriz/friendly-snippets",
-	"saadparwaiz1/cmp_luasnip",
 
 	{
 		"windwp/nvim-autopairs",
@@ -360,27 +574,6 @@ lazy.setup({
 		config = function()
 			require("nvim-autopairs").setup({
 				check_ts = true,
-			})
-		end,
-	},
-	{
-		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		config = function()
-			require("nvim-surround").setup({
-				keymaps = {
-					insert = "<C-g>s",
-					insert_line = "<C-g>S",
-					normal = "ys",
-					normal_cur = "yss",
-					normal_line = "yS",
-					normal_cur_line = "ySS",
-					visual = "S",
-					visual_line = "gS",
-					delete = "ds",
-					change = "cs",
-					change_line = "cS",
-				},
 			})
 		end,
 	},
@@ -435,6 +628,8 @@ lazy.setup({
 	},
 
 	{ "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
+
+	{ "tpope/vim-fugitive" },
 
 	{
 		"akinsho/git-conflict.nvim",
@@ -506,6 +701,21 @@ lazy.setup({
 		end,
 	},
 	{
+		"kdheepak/lazygit.nvim",
+		lazy = false,
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
+	{
 		"christoomey/vim-tmux-navigator",
 		cmd = {
 			"TmuxNavigateLeft",
@@ -524,4 +734,137 @@ lazy.setup({
 	},
 
 	{ "wakatime/vim-wakatime", lazy = false },
-})
+	{
+		"nvzone/typr",
+		dependencies = "nvzone/volt",
+		opts = {},
+		cmd = { "Typr", "TyprStats" },
+	},
+}
+
+local commonPlugins = {
+
+	-- Sintax
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		dependencies = {
+			"windwp/nvim-ts-autotag",
+			"JoosepAlviste/nvim-ts-context-commentstring",
+		},
+		config = function()
+			require("treesitter-config")
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		after = "nvim-treesitter",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				keymaps = {
+					insert = "<C-g>s",
+					insert_line = "<C-g>S",
+					normal = "ys",
+					normal_cur = "yss",
+					normal_line = "yS",
+					normal_cur_line = "ySS",
+					visual = "S",
+					visual_line = "gS",
+					delete = "ds",
+					change = "cs",
+					change_line = "cS",
+				},
+			})
+		end,
+	},
+
+	"tpope/vim-repeat",
+
+	-- Motion
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {
+			modes = {
+				char = {
+					jump_labels = true,
+				},
+			},
+		},
+		keys = {
+			{
+				"s",
+				mode = { "n", "o" },
+				function()
+					require("flash").jump({
+						search = { -- Match beginning of words only
+							mode = function(str)
+								return "\\<" .. str
+							end,
+						},
+					})
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Flash Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
+	},
+}
+
+local onlyVscodePlugins = {}
+
+local is_vscode = vim.g.vscode ~= nil
+
+local plugins = commonPlugins
+if not is_vscode then
+	for _, plugin in ipairs(notVsCodePlugins) do
+		table.insert(plugins, plugin)
+	end
+end
+
+if is_vscode then
+	for _, plugin in ipairs(onlyVscodePlugins) do
+		table.insert(plugins, plugin)
+	end
+end
+
+lazy.setup(plugins)
