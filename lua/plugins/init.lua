@@ -40,7 +40,7 @@ local notVsCodePlugins = {
 	},
 
 	{
-		"NvChad/nvim-colorizer.lua",
+		"catgoose/nvim-colorizer.lua",
 		config = function()
 			require("colorizer-config")
 		end,
@@ -103,15 +103,10 @@ local notVsCodePlugins = {
 		dependencies = {
 			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
 		},
 	},
 
 	{
-
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
 		config = function()
@@ -128,14 +123,6 @@ local notVsCodePlugins = {
 		end,
 		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 		ft = { "netrw" },
-	},
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-fzy-native.nvim" },
-		config = function()
-			require("telescope-config")
-		end,
-		cmd = "Telescope",
 	},
 	{
 		"ibhagwan/fzf-lua",
@@ -256,7 +243,12 @@ local notVsCodePlugins = {
 	{
 		"saghen/blink.cmp",
 		-- optional: provides snippets for the snippet source
-		dependencies = { "rafamadriz/friendly-snippets" },
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			"onsails/lspkind-nvim",
+			"fang2hou/blink-copilot",
+			"Kaiser-Yang/blink-cmp-avante",
+		},
 
 		-- use a release tag to download pre-built binaries
 		version = "*",
@@ -300,7 +292,22 @@ local notVsCodePlugins = {
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
+				default = { "avante", "lsp", "path", "snippets", "buffer" },
+				providers = {
+					avante = {
+						module = "blink-cmp-avante",
+						name = "Avante",
+						opts = {
+							-- options for blink-cmp-avante
+						},
+					},
+					-- copilot = {
+					-- 	name = "copilot",
+					-- 	module = "blink-copilot",
+					-- 	score_offset = 100,
+					-- 	async = true,
+					-- },
+				},
 			},
 			snippets = { preset = "luasnip" },
 
@@ -335,11 +342,11 @@ local notVsCodePlugins = {
 										if dev_icon then
 											icon = dev_icon
 										end
-									else
-										icon = lspkind.symbolic(ctx.kind, {
-											mode = "symbol",
-											present = "codicons",
-										})
+										-- else
+										-- 	icon = lspkind.symbolic(ctx.kind, {
+										-- 		mode = "symbol",
+										-- 		present = "codicons",
+										-- 	})
 									end
 
 									return icon .. ctx.icon_gap
@@ -373,45 +380,6 @@ local notVsCodePlugins = {
 		},
 		opts_extend = { "sources.default" },
 	},
-
-	-- Copilot
-	-- {
-	-- 	"zbirenbaum/copilot.lua",
-	-- 	event = { "VimEnter" },
-	-- 	config = function()
-	-- 		vim.defer_fn(function()
-	-- 			require("copilot").setup({
-	-- 				cmp = {
-	-- 					enabled = true,
-	-- 					method = "getCompletionsCycling",
-	-- 				},
-	-- 			})
-	-- 		end, 100)
-	-- 	end,
-	-- },
-	-- {
-	-- 	"zbirenbaum/copilot-cmp",
-	-- 	dependencies = { "copilot.lua" },
-	-- 	config = function()
-	-- 		require("copilot_cmp").setup()
-	-- 	end,
-	-- },
-	{
-		"CopilotC-Nvim/CopilotChat.nvim",
-		dependencies = {
-			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-		},
-		build = "make tiktoken", -- Only on MacOS or Linux
-
-		opts = {
-			debug = false, -- Enable debugging
-			-- See Configuration section for rest
-		},
-		-- See Commands section for default commands if you want to lazy load on them
-	},
-
-	"onsails/lspkind-nvim",
 
 	-- Snippets
 	{
@@ -469,6 +437,9 @@ local notVsCodePlugins = {
 	-- Lualine
 	{
 		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"AndreM222/copilot-lualine",
+		},
 		config = function()
 			require("lualine-config")
 		end,
@@ -485,17 +456,7 @@ local notVsCodePlugins = {
 		end,
 	},
 
-	{ "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
-
 	{ "tpope/vim-fugitive" },
-
-	{
-		"akinsho/git-conflict.nvim",
-		version = "*",
-		config = function()
-			require("git-conflict").setup()
-		end,
-	},
 
 	-- Markdown
 	{
@@ -514,6 +475,192 @@ local notVsCodePlugins = {
 			require("illuminate").configure({})
 		end,
 	},
+
+	-- MML (Ai Agents)
+	{
+		"yetone/avante.nvim",
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		-- ⚠️ must add this setting! ! !
+		build = vim.fn.has("win32") ~= 0
+				and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+			or "make",
+		event = "VeryLazy",
+		version = false, -- Never set this value to "*"! Never!
+		---@module 'avante'
+		---@type avante.Config
+		opts = {
+			-- add any opts here
+			-- for example
+			-- provider = "claude",
+			-- providers = {
+			--   claude = {
+			--     endpoint = "https://api.anthropic.com",
+			--     model = "claude-sonnet-4-20250514",
+			--     timeout = 30000, -- Timeout in milliseconds
+			--       extra_request_body = {
+			--         temperature = 0.75,
+			--         max_tokens = 20480,
+			--       },
+			--   },
+			--   moonshot = {
+			--     endpoint = "https://api.moonshot.ai/v1",
+			--     model = "kimi-k2-0711-preview",
+			--     timeout = 30000, -- Timeout in milliseconds
+			--     extra_request_body = {
+			--       temperature = 0.75,
+			--       max_tokens = 32768,
+			--     },
+			--   },
+			-- },
+			mode = "agentic",
+			provider = "copilot",
+			providers = {
+				-- openrouter = {
+				-- 	__inherited_from = "openai",
+				-- 	endpoint = "https://openrouter.ai/api/v1",
+				-- 	api_key_name = "OPENROUTER_API_KEY",
+				-- 	model = "deepseek/deepseek-chat-v3-0324",
+				-- 	-- disable_tools = true, -- disable tools!
+				-- 	extra_request_body = {
+				-- 		-- models = {
+				-- 		-- 	"qwen/qwen3-coder:free",
+				-- 		-- 	"meta-llama/llama-3.3-70b-instruct:free",
+				-- 		-- },
+				-- 		transforms = { "middle‑out" },
+				-- 	},
+				-- },
+				-- ollama = {
+				-- 	endpoint = "http://localhost:11434",
+				-- 	model = "qwen2.5-coder:3b",
+				-- 	extra_request_body = {
+				-- 		-- options = { num_ctx = 4096 },
+				-- 		-- optionally: temperature, keep_alive, etc.
+				-- 	},
+				-- },
+				copilot = {
+					model = "gpt-4.1",
+					use_response_api = false,
+				},
+			},
+			behaviour = {
+				auto_approve_tool_permissions = false, -- Default: show permission prompts for all tools
+			},
+			selector = {
+				--- @alias avante.SelectorProvider "native" | "fzf_lua" | "mini_pick" | "snacks" | "telescope" | fun(selector: avante.ui.Selector): nil
+				--- @type avante.SelectorProvider
+				provider = "fzf_lua",
+				-- Options override for custom providers
+				provider_opts = {},
+			},
+			input = {
+				provider = "snacks",
+				provider_opts = {
+					-- Additional snacks.input options
+					title = "Avante Input",
+					icon = " ",
+				},
+			},
+			-- system_prompt as function ensures LLM always has latest MCP server state
+			-- This is evaluated for every message, even in existing chats
+			system_prompt = function()
+				local hub = require("mcphub").get_hub_instance()
+				return hub and hub:get_active_servers_prompt() or ""
+			end,
+			-- Using function prevents requiring mcphub before it's loaded
+			custom_tools = function()
+				return {
+					require("mcphub.extensions.avante").mcp_tool(),
+				}
+			end,
+			-- disabled_tools is to make it compatible with mcphub
+			-- disabled_tools = {
+			-- 	"list_files", -- Built-in file operations
+			-- 	"search_files",
+			-- 	"read_file",
+			-- 	"create_file",
+			-- 	"rename_file",
+			-- 	"delete_file",
+			-- 	"create_dir",
+			-- 	"rename_dir",
+			-- 	"delete_dir",
+			-- 	"bash", -- Built-in terminal access
+			-- },
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"folke/snacks.nvim", -- for input provider snacks
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
+	},
+	{
+
+		"ravitemer/mcphub.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+		config = function()
+			require("mcphub").setup({
+				extensions = {
+					avante = {
+						make_slash_commands = true, -- make /slash commands from MCP server prompts
+					},
+				},
+			})
+		end,
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		dependencies = {
+			"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+		},
+		opts = {
+			suggestion = { enabled = false },
+			panel = { enabled = false },
+			filetypes = {
+				markdown = true,
+				help = true,
+			},
+		},
+	},
+
+	-- {
+	-- 	"CopilotC-Nvim/CopilotChat.nvim",
+	-- 	dependencies = {
+	-- 		{ "nvim-lua/plenary.nvim", branch = "master" },
+	-- 	},
+	-- 	build = "make tiktoken",
+	-- 	opts = {
+	-- 		-- See Configuration section for options
+	-- 	},
+	-- },
 
 	-- Search And Replace
 	"windwp/nvim-spectre",
@@ -591,13 +738,11 @@ local notVsCodePlugins = {
 		},
 	},
 
-	{ "wakatime/vim-wakatime", lazy = false },
 	{
-		"nvzone/typr",
-		dependencies = "nvzone/volt",
-		opts = {},
-		cmd = { "Typr", "TyprStats" },
+		"sindrets/diffview.nvim",
 	},
+
+	{ "wakatime/vim-wakatime", lazy = false },
 }
 
 local commonPlugins = {
