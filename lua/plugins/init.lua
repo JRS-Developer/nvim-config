@@ -292,7 +292,7 @@ local notVsCodePlugins = {
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
-				default = { "avante", "lsp", "path", "snippets", "buffer" },
+				default = { "avante", "copilot", "lsp", "path", "snippets", "buffer" },
 				providers = {
 					avante = {
 						module = "blink-cmp-avante",
@@ -301,12 +301,15 @@ local notVsCodePlugins = {
 							-- options for blink-cmp-avante
 						},
 					},
-					-- copilot = {
-					-- 	name = "copilot",
-					-- 	module = "blink-copilot",
-					-- 	score_offset = 100,
-					-- 	async = true,
-					-- },
+					copilot = {
+						name = "copilot",
+						module = "blink-copilot",
+						score_offset = 100,
+						async = true,
+						opts = {
+							-- options for blink-copilot
+						},
+					},
 				},
 			},
 			snippets = { preset = "luasnip" },
@@ -335,18 +338,14 @@ local notVsCodePlugins = {
 							kind_icon = {
 								ellipsis = false,
 								text = function(ctx)
-									local lspkind = require("lspkind")
 									local icon = ctx.kind_icon
 									if vim.tbl_contains({ "Path" }, ctx.source_name) then
 										local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
 										if dev_icon then
 											icon = dev_icon
 										end
-										-- else
-										-- 	icon = lspkind.symbolic(ctx.kind, {
-										-- 		mode = "symbol",
-										-- 		present = "codicons",
-										-- 	})
+									elseif ctx.source_name == "copilot" then
+										icon = ""
 									end
 
 									return icon .. ctx.icon_gap
@@ -560,31 +559,6 @@ local notVsCodePlugins = {
 					icon = " ",
 				},
 			},
-			-- system_prompt as function ensures LLM always has latest MCP server state
-			-- This is evaluated for every message, even in existing chats
-			system_prompt = function()
-				local hub = require("mcphub").get_hub_instance()
-				return hub and hub:get_active_servers_prompt() or ""
-			end,
-			-- Using function prevents requiring mcphub before it's loaded
-			custom_tools = function()
-				return {
-					require("mcphub.extensions.avante").mcp_tool(),
-				}
-			end,
-			-- disabled_tools is to make it compatible with mcphub
-			-- disabled_tools = {
-			-- 	"list_files", -- Built-in file operations
-			-- 	"search_files",
-			-- 	"read_file",
-			-- 	"create_file",
-			-- 	"rename_file",
-			-- 	"delete_file",
-			-- 	"create_dir",
-			-- 	"rename_dir",
-			-- 	"delete_dir",
-			-- 	"bash", -- Built-in terminal access
-			-- },
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -616,23 +590,6 @@ local notVsCodePlugins = {
 				ft = { "markdown", "Avante" },
 			},
 		},
-	},
-	{
-
-		"ravitemer/mcphub.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
-		config = function()
-			require("mcphub").setup({
-				extensions = {
-					avante = {
-						make_slash_commands = true, -- make /slash commands from MCP server prompts
-					},
-				},
-			})
-		end,
 	},
 	{
 		"zbirenbaum/copilot.lua",
